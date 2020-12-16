@@ -10,14 +10,16 @@
       <div class="nav__header">
         <router-link to="/ulubione">
           <div class="nav__favorite">
-            <img src="../assets/icons/star.svg" alt="star" width="30">
+            <!-- <img src="../assets/icons/star.svg" alt="star" width="30"> -->
+            <i class="fas fa-heart fa-lg"></i>
             <div>Ulubione</div>
           </div>
         </router-link>
 
         <div v-if="!this.$store.state.logged" class="nav__account ml-70">
           <div @click="toggleMyAccountIsVisible" style="display: flex; align-items: center;">
-            <img src="../assets/icons/person.svg" alt="person" width="30">
+            <!-- <img src="../assets/icons/person.svg" alt="person" width="30"> -->
+            <i class="fas fa-user fa-lg"></i>
             <div>Moje konto</div>
           </div>
 
@@ -39,7 +41,8 @@
       
         <div v-if="this.$store.state.logged" class="nav__account ml-70" >
           <div @click="toggleMyAccountIsVisible" style="display: flex; align-items: center;">
-            <img src="../assets/icons/person.svg" alt="person" width="30">
+            <!-- <img src="../assets/icons/person.svg" alt="person" width="30"> -->
+            <i class="fas fa-user fa-lg"></i>
             <div>Moje konto</div>
           </div>
           
@@ -64,19 +67,19 @@
 
             <router-link to="/ustawienia">
               <div class="nav__account__menu__item">
-                Ustawienia
+                <i class="fas fa-cog"></i> Ustawienia
               </div>
             </router-link>
 
             <div @click="logOut" class="nav__account__menu__item">
-              Wyloguj
+              <i class="fas fa-sign-out-alt"></i> Wyloguj
             </div>
           </div>
         </div>
 
         <router-link to="/dodaj-ogloszenie" class="ml-70">
           <button class="nav__btn">
-            Dodaj ogłoszenie
+            Dodaj ogłoszenie 
           </button>
         </router-link>
       </div>
@@ -123,6 +126,7 @@ export default {
   justify-content: space-around;
   align-items: center;
 
+
   &__title{
     font-weight: 500;
     font-size: 24px;
@@ -134,6 +138,10 @@ export default {
     align-items: center;
     justify-content: space-between;
     font-size: 16px;
+    
+    i{
+      margin-right: 6px;
+    }
   }
 
   &__favorite, &__account, &__title{
@@ -148,6 +156,7 @@ export default {
   &__account{
     position: relative;
     cursor: pointer;
+
 
     &__menu{
       box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);

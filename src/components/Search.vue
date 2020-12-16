@@ -1,7 +1,7 @@
 <template>
     <div class="form">
         <input class="form__input" type="text" placeholder="Czego szukasz?">
-        <button class="form__btn">Szukaj</button>
+        <button class="form__btn">Szukaj <i class="fas fa-search"></i></button>
     </div>
 </template>
 
@@ -19,6 +19,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+
 .form{
     margin: auto;
     width: 600px;
@@ -52,5 +54,9 @@ export default {
             transition: background-color .5s;
         }
     }
+
+    i{
+        margin-left: 10px;
+    } 
 }
 </style>
