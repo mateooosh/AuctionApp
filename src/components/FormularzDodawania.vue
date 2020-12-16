@@ -1,0 +1,308 @@
+<template>
+    <div class="form">
+        <h1>Dodaj ogłoszenie</h1>
+        <form class="form__title">
+            <label  class="form__title__label" for="title">Tytuł<span style="color: red;">*</span></label>
+            <input v-model="title" class="form__title__input" name="title" type="text" placeholder="Tytuł">
+        </form>
+
+        <form class="form__state">
+            <label class="register__state__label" for="state">Stan<span style="color: red;">*</span></label>
+            <select v-model="state" class="register__state__select" name="state">
+                <option value="" disabled selected>Wybierz...</option>
+                <option value="Nowy">Nowy</option>
+                <option value="Używany">Używany</option>
+            </select>
+        </form>
+
+        <form class="form__category">
+            <label class="register__category__label" for="category">Kategoria<span style="color: red;">*</span></label>
+            <select v-model="category" class="register__category__select" name="category">
+                <option value="" disabled selected>Wybierz...</option>
+                <option value="Nieruchomości">Nieruchomości</option>
+                <option value="Motoryzacja">Motoryzacja</option>
+                <option value="Rolnictwo">Rolnictwo</option>
+                <option value="Elektronika">Elektronika</option>
+                <option value="Sport">Sport</option>
+                <option value="Zwierzęta">Zwierzęta</option>
+                <option value="Praca">Praca</option>
+                <option value="Dla dzieci">Dla dzieci</option>
+                <option value="Moda">Moda</option>
+                <option value="Pozostałe">Pozostałe</option>
+            </select>
+        </form>
+
+        <form class="form__startingPrice">
+            <label  class="form__startingPrice__label" for="startingPrice">Cena początkowa<span style="color: red;">*</span></label>
+            <input v-model="startingPrice" class="form__startingPrice__input" min="0" name="startingPrice" type="number" placeholder="Cena początkowa">
+        </form>
+
+        <form class="form__instantPrice">
+            <label  class="form__instantPrice__label" for="instantPrice">Cena błyskawiczna<span style="color: red;">*</span></label>
+            <input v-model="instantPrice" class="form__instantPrice__input" min="0" name="instantPrice" type="number" placeholder="Cena błyskawiczna">
+        </form>
+
+        <form class="form__description">
+            <label  class="form__description__label" for="description">Opis przedmiotu<span style="color: red;">*</span></label>
+            <!-- <input v-model="description" class="form__description__input" name="description" type="textarea" placeholder="Tytuł"> -->
+            <textarea v-model="description" name="description" class="form__description__input" placeholder="Opis..."></textarea>
+        </form>
+
+        <form class="form__photos">
+            <label class="form__description__label">Dodaj zdjęcia</label>
+            <label class="form__photos__label" for="photo">Dodaj zdjęcia</label>
+            <input @change="displayPhotos" class="form__photos__input" accept="image/*" id="photo" type="file" name="uploadFile" multiple="multiple" />
+        </form>
+        <div class="form__display">
+            <div :class="{'display-none': photosLength<1}" >
+                <img class="photo" src="#">
+            </div>
+            <div :class="{'display-none': photosLength<2}">
+                <img class="photo" src="#">
+            </div>
+            <div :class="{'display-none': photosLength<3}">
+                <img class="photo" src="#">
+            </div>
+            <div :class="{'display-none': photosLength<4}">
+                <img class="photo" src="#">
+            </div>
+            <div :class="{'display-none': photosLength<5}">
+                <img class="photo" src="#">
+            </div>
+        </div>
+        <button @click="addAuction" class="form__button">
+            Dodaj ogłoszenie
+        </button>
+    </div>
+</template>
+
+<script>
+import { createStore } from 'vuex'
+
+export default {
+    name: 'FormularzDodawania',
+    data(){
+        return{
+            title: '',
+            state: '',
+            category: '',
+            startingPrice: '',
+            instantPrice: '',
+            description: '',
+            photos: {},
+            photosLength: 0,
+        }
+    },
+    mounted(){
+        console.log(this.photos);
+    },
+    methods:{
+        displayPhotos(){
+            this.photos = document.getElementById('photo').files;
+            //too many photos
+            if(this.photos.length > 5){
+                alert("Wybrano zbyt dużo zdjęć! (Max: 5 zdjęć)");
+            }
+            else{
+                this.photosLength = this.photos.length;
+                let out = document.getElementsByClassName('photo');
+                console.log("OUT",out, "PHOTOS",this.photos);
+                for(let i=0; i<this.photos.length; i++){
+                    out[i].src = URL.createObjectURL(this.photos[i]);
+                    out[i].onload = function() {
+                        URL.revokeObjectURL(out[i].src) 
+                    }
+                }
+            }
+        },
+
+        addAuction(){
+            let obj = {
+                title: this.title,
+                state: this.state,
+                category: this.category,
+                startingPrice: this.startingPrice,
+                instantPrice: this.instantPrice,
+                description: this.description,
+                photos: this.photos,
+            }
+
+            console.log(obj)
+        }
+    },
+    store: createStore,
+  
+}
+</script>
+
+<style scoped lang="scss">
+
+.display-none{
+    display: none !important;
+}
+
+.photo{
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+}
+.form{
+    box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+    width: 700px;
+    padding: 70px 40px 40px;
+    margin: 50px auto;
+
+    h1{
+        padding: 0;
+        margin: 0;
+        margin-bottom: 40px;
+        text-align: left;
+        font-weight: 400;
+    }
+
+    &__category, &__state{
+        label{
+            display: block;
+            font-weight: 500;
+            font-size: 16px;
+            margin-top: 30px;
+            margin-bottom:8px;
+        }
+
+        select{
+            width:100%;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 10px;
+            font-size: 16px;
+            background-color: #F3F3F3;
+            cursor: pointer;
+        }
+    }
+
+    &__startingPrice, &__instantPrice{
+        position: relative;
+        label::after{
+            content: 'PLN';
+            position: absolute;
+            opacity: 0.5;
+            right: 30px;
+            top: 37px;
+        }
+    }
+
+    &__title, &__startingPrice, &__instantPrice, &__description {
+        label{
+            position: relative;
+            display: block;
+            font-weight: 500;
+            font-size: 16px;
+            margin-top: 30px;
+            margin-bottom:8px;
+        }
+
+        input{
+            width:100%;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 10px;
+            font-size: 16px;
+            background-color: #F3F3F3;
+            
+            &:focus{
+                outline: 1px solid #007E33;
+            }
+        }
+    }
+
+    textarea{
+        background-color: #F3F3F3;
+        width:100%;
+        height: 160px;
+        min-height: 100px;
+        max-width: 100%;
+        min-width: 100px;
+        font-size: 16px;
+        padding: 10px 10px;
+        outline: none;
+        border: none;
+        border-radius: 4px;
+
+        &:focus{
+            outline: 1px solid #007E33;
+        }
+    }
+
+    &__photos{
+        label:nth-child(1){
+            display: block;
+            font-weight: 500;
+            font-size: 16px;
+            margin-top: 30px;
+            margin-bottom:22px;
+        }
+        label:nth-child(2){
+            position: relative;
+            width:200px;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom:8px;
+
+            background-color: #007E33;
+            color: white;
+            font-size: 14px;
+            border-radius: 7px;
+            padding: 10px 30px;
+            font-weight: 400;
+
+            &:hover{
+                cursor: pointer;
+                background-color: #006428;
+                transition: background-color .5s;
+            }
+        }
+
+        input{
+            display: none;
+            outline: none;
+            border: none;
+        }
+    }
+    &__display{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-top:20px;
+        div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            width: 48%;
+            height: 180px;
+        }
+    }
+
+    &__button{
+        display: block;
+        width:200px;
+        background-color: #007E33;
+        color: white;
+        font-size: 14px;
+        border-radius: 7px;
+        padding: 10px 30px;
+        margin: 70px 0 0 auto;
+        outline: none;
+        border: none;
+        cursor: pointer;
+
+        &:hover{
+            background-color: #006428;
+            transition: background-color .5s;
+        }
+    }
+}
+
+</style>

@@ -8,12 +8,44 @@ const routes = [
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/ulubione',
+    name: 'Ulubione',
+    component: () => import('../views/Ulubione.vue')
+  },
+  {
+    path: '/moje-przedmioty',
+    name: 'MojePrzedmioty',
+    component: () => import('../views/MojePrzedmioty.vue')
+  },
+  {
+    path: '/moje-licytacje',
+    name: 'MojeLicytacje',
+    component: () => import('../views/MojeLicytacje.vue')
+  },
+  {
+    path: '/wygrane-licytacje',
+    name: 'WygraneLicytacje',
+    component: () => import('../views/WygraneLicytacje.vue')
+  },
+  {
+    path: '/dodaj-ogloszenie',
+    name: 'DodajOgloszenie',
+    component: () => import('../views/DodajOgloszenie.vue')
+  },
+  {
+    path: '/ustawienia',
+    name: 'Ustawienia',
+    component: () => import('../views/Ustawienia.vue')
+  },
+  {
+    path: '/logowanie',
+    name: 'Logowanie',
+    component: () => import('../views/Logowanie.vue')
+  },
+  {
+    path: '/rejestracja',
+    name: 'Rejestracja',
+    component: () => import('../views/Rejestracja.vue')
   }
 ]
 
