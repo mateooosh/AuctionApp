@@ -119,12 +119,19 @@ export default {
 
 <style scoped lang="scss">
 .nav{
+  position: sticky;
+  top: 0;
+  z-index: 20;
   width: 100%;
   height: 70px;
   background-color:  #eee;
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 1px 7px 0px rgba(0,0,0,0.75);
 
 
   &__title{
