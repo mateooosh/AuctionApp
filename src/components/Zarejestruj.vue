@@ -218,7 +218,8 @@ export default {
 }
 
 .register{
-    box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+    // box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 9px -5px rgba(0,0,0,0.75);
     width: 500px;
     padding: 70px 40px 40px;
     margin: 50px auto;
@@ -304,6 +305,20 @@ export default {
         font-weight: 500;
         text-align: center;
         margin-top: 30px;
+    }
+}
+
+@media(max-width:510px){
+    .register{
+        box-shadow: none;
+        width: 100%;
+        // padding: 70px 20px 40px;
+    }
+}
+
+@media(max-width:360px){
+    .register{
+        padding: 70px 20px 40px;
     }
 }
 </style>

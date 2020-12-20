@@ -66,6 +66,7 @@ export default {
 
                 //przekieruj na strone startową
                 this.$store.commit('logged', true);
+                this.$store.commit('userId', response.userId);
                 this.$router.push("/");
                 
             })
@@ -134,11 +135,12 @@ export default {
 }
 
 .login{
-    box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+    // box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 9px -5px rgba(0,0,0,0.75);
     width: 400px;
     // height: 500px;
     padding: 70px 40px 40px;
-    margin: 100px auto;
+    margin: 70px auto;
 
     h1{
         padding: 0;
@@ -207,6 +209,19 @@ export default {
         font-weight: 500;
         text-align: center;
         margin-top: 30px;
+    }
+}
+
+@media(max-width: 410px){
+    .login{
+        box-shadow: none;
+        width: 100%;
+    }
+}
+
+@media(max-width: 360px){
+    .login{
+        padding: 70px 20px 40px;
     }
 }
 </style>

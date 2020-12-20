@@ -80,7 +80,7 @@ export default {
         justify-content: space-around;
         flex-wrap: wrap;
 
-        div{
+        >div{
             border-radius: 6px;
             width: 160px;
             text-align: center;
@@ -88,20 +88,39 @@ export default {
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            height: 90px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            background-color: rgb(255, 255, 255);
+            &:hover{ 
+                background-color: rgb(241, 241, 241);
+                cursor: pointer;
+                transition: background-color .5s;
+            }
         }
     }
 }
 
-//zmienic!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-.categories__list > div{
-    height: 90px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    background-color: rgb(255, 255, 255);
-    &:hover{
-        background-color: rgb(241, 241, 241);
-        cursor: pointer;
-        transition: background-color .5s;
+@media(max-width: 820px){
+    .categories{
+        width: 100%;
+        &__list{
+            // flex-direction: column;
+            flex-wrap: wrap;
+        }
     }
 }
+
+// //zmienic!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// .categories__list > div{
+//     height: 90px;
+//     margin-top: 5px;
+//     margin-bottom: 5px;
+//     background-color: rgb(255, 255, 255);
+//     &:hover{
+//         background-color: rgb(241, 241, 241);
+//         cursor: pointer;
+//         transition: background-color .5s;
+//     }
+// }
 </style>

@@ -1,5 +1,9 @@
 <template>
     <div class="form">
+         <!-- loading animation -->
+        <!-- <div v-if="loading" class="lds-dual-ring"></div> -->
+
+
         <h1>Dodaj ogłoszenie</h1>
         <form class="form__title">
             <label  class="form__title__label" for="title">Tytuł<span style="color: red;">*</span></label>
@@ -77,7 +81,9 @@
 </template>
 
 <script>
+
 import { createStore } from 'vuex'
+
 
 export default {
     name: 'FormularzDodawania',
@@ -90,12 +96,11 @@ export default {
             instantPrice: '',
             description: '',
             photos: {},
+            photosBlob: [],
             photosLength: 0,
         }
     },
-    mounted(){
-        console.log(this.photos);
-    },
+    
     methods:{
         displayPhotos(){
             this.photos = document.getElementById('photo').files;
@@ -106,13 +111,37 @@ export default {
             else{
                 this.photosLength = this.photos.length;
                 let out = document.getElementsByClassName('photo');
-                console.log("OUT",out, "PHOTOS",this.photos);
+
+                //display photos
                 for(let i=0; i<this.photos.length; i++){
                     out[i].src = URL.createObjectURL(this.photos[i]);
                     out[i].onload = function() {
                         URL.revokeObjectURL(out[i].src) 
                     }
                 }
+
+                // convert images to blob
+                let counter = 0;
+                let promise = new Promise((resolve) => {
+                    for(let i=0; i<this.photosLength; i++){
+                        fetch(out[i].src)
+                        .then( response => {
+                            return response.blob();
+                        })
+                        .then( blob => {
+                            this.photosBlob.push(blob);
+                        }).then(() => {
+                            counter++;
+                            //resolve promise
+                            if(counter === this.photosLength)
+                                resolve();
+                        });
+                    } 
+                }); 
+
+                promise.then(() => {
+                    // console.log(this.photosBlob);
+                })
             }
         },
 
@@ -124,10 +153,35 @@ export default {
                 startingPrice: this.startingPrice,
                 instantPrice: this.instantPrice,
                 description: this.description,
-                photos: this.photos,
+                photosBlob: this.photosBlob,
+                photosLength: this.photosLength
             }
 
-            console.log(obj)
+            console.log('Przesłany obiekt:',obj);
+
+            let url = 'http://localhost:8080/api/auction/create';
+            //request
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(obj)
+            })
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error(response.status);
+                }
+                else 
+                    return response.json();
+            })
+            .then(response => {
+                // display response from server
+                console.log('Sukces. Odebrane dane ', response);
+                
+                
+            })
+            .catch((error) => {
+                console.log('Błąd', error);
+                alert("Nie udało się dodać przedmiotu!");
+            })
         }
     },
     store: createStore,
@@ -147,11 +201,10 @@ export default {
     max-height: 100%;
 }
 .form{
-    box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 9px -5px rgba(0,0,0,0.75);
     width: 700px;
     padding: 70px 40px 40px;
     margin: 50px auto;
-
     h1{
         padding: 0;
         margin: 0;
@@ -305,4 +358,48 @@ export default {
     }
 }
 
+@media(max-width: 720px){
+   .form{
+        width: 98%;
+
+        &__display{
+            div{
+                width: 100%;
+                height: auto;
+            }
+        }
+   }
+}
+
+@media(max-width: 400px){
+    .form{
+        padding: 70px 20px 40px;
+    }
+}
+
+//loading animation
+// .lds-dual-ring {
+//   display: inline-block;
+//   width: 160px;
+//   height: 160px;
+// }
+// .lds-dual-ring:after {
+//   content: " ";
+//   display: block;
+//   width: 128px;
+//   height: 128px;
+//   margin: 16px;
+//   border-radius: 50%;
+//   border: 12px solid rgb(0, 0, 0);
+//   border-color: rgb(0, 0, 0) transparent rgb(0, 0, 0) transparent;
+//   animation: lds-dual-ring 1.6s linear infinite;
+// }
+// @keyframes lds-dual-ring {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="form">
         <input class="form__input" type="text" placeholder="Czego szukasz?">
-        <button class="form__btn">Szukaj <i class="fas fa-search"></i></button>
+        <button class="form__btn">Szukaj</button>
     </div>
 </template>
 
@@ -22,9 +22,11 @@ export default {
 
 
 .form{
+    
     margin: auto;
     width: 600px;
     display: flex;
+    justify-content: center;
     &__input{
         display: block;
         flex: 4;
@@ -39,6 +41,7 @@ export default {
 
     &__btn{
         flex: 1;
+        // min-width: 80px;
         background-color: #007E33;
         color: white;
         outline: none;
@@ -58,5 +61,11 @@ export default {
     i{
         margin-left: 10px;
     } 
+}
+
+@media(max-width: 620px){
+    .form{
+        width: 90%;
+    }
 }
 </style>

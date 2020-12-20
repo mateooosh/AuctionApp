@@ -2,19 +2,13 @@
   <nav class="nav">
       <router-link to="/">
         <div class="nav__title">
-          <img src="../assets/icons/store.svg" alt="store" width="40">
-          <div>wdmj.pl</div>
+          <!-- <img src="../assets/icons/store.svg" alt="store" width="40"> -->
+          <img src="../assets/hammers.png" height="50" alt="">
+          <div>WDMJ.PL</div>
         </div>
       </router-link>
       
       <div class="nav__header">
-        <router-link to="/ulubione">
-          <div class="nav__favorite">
-            <!-- <img src="../assets/icons/star.svg" alt="star" width="30"> -->
-            <i class="fas fa-heart fa-lg"></i>
-            <div>Ulubione</div>
-          </div>
-        </router-link>
 
         <div v-if="!this.$store.state.logged" class="nav__account ml-70">
           <div @click="toggleMyAccountIsVisible" style="display: flex; align-items: center;">
@@ -62,6 +56,12 @@
             <router-link to="/wygrane-licytacje">
               <div class="nav__account__menu__item">
                 Wygrane licytacje
+              </div>
+            </router-link>
+
+            <router-link to="/ulubione">
+              <div class="nav__account__menu__item">
+                <i class="fas fa-heart"></i> Ulubione
               </div>
             </router-link>
 
@@ -129,14 +129,15 @@ export default {
   justify-content: space-around;
   align-items: center;
 
-  -webkit-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 2px 7px 0px rgba(0,0,0,0.75);
-box-shadow: 0px 1px 7px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 1px 7px -2px rgba(0,0,0,0.75);
 
 
   &__title{
     font-weight: 500;
-    font-size: 24px;
+    font-size: 22px;
+    div{
+      margin-left:10px;
+    }
   }
 
   &__header{
@@ -151,7 +152,7 @@ box-shadow: 0px 1px 7px 0px rgba(0,0,0,0.75);
     }
   }
 
-  &__favorite, &__account, &__title{
+  &__account, &__title{
     display: flex;
     align-items: center;
 
@@ -166,7 +167,7 @@ box-shadow: 0px 1px 7px 0px rgba(0,0,0,0.75);
 
 
     &__menu{
-      box-shadow: 0px 2px 9px 1px rgba(0,0,0,0.75);
+      box-shadow: 0px 0px 9px -2px rgba(0,0,0,0.75);
       // padding: 20px 40px;
       // background-color: red;
       background-color: white;
@@ -214,6 +215,26 @@ box-shadow: 0px 1px 7px 0px rgba(0,0,0,0.75);
       background-color: #006428;
       transition: background-color .5s;
     }
+  }
+}
+
+@media(max-width: 620px){
+  .nav{
+    padding: 0 10px;
+
+    &__title{
+      div{
+        display: none;
+      }
+    }
+
+    &__btn{
+      padding: 10px 10px;
+    }
+  }
+
+  .ml-70{
+    margin-left: 20px !important;
   }
 }
 
