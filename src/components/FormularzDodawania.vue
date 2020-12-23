@@ -146,42 +146,46 @@ export default {
         },
 
         addAuction(){
-            let obj = {
-                title: this.title,
-                state: this.state,
-                category: this.category,
-                startingPrice: this.startingPrice,
-                instantPrice: this.instantPrice,
-                description: this.description,
-                photosBlob: this.photosBlob,
-                photosLength: this.photosLength
-            }
-
-            console.log('Przesłany obiekt:',obj);
-
-            let url = 'http://localhost:8080/api/auctions/create';
-            //request
-            fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(obj)
-            })
-            .then(response => {
-                if(!response.ok) {
-                    throw new Error(response.status);
+            if(this.$store.state.logged){
+                let obj = {
+                    title: this.title,
+                    state: this.state,
+                    category: this.category,
+                    startingPrice: this.startingPrice,
+                    instantPrice: this.instantPrice,
+                    description: this.description,
+                    photosBlob: this.photosBlob,
+                    photosLength: this.photosLength,
+                    userId: this.$store.state.userId,
                 }
-                else 
-                    return response.json();
-            })
-            .then(response => {
-                // display response from server
-                console.log('Sukces. Odebrane dane ', response);
-                
-                
-            })
-            .catch((error) => {
-                console.log('Błąd', error);
-                alert("Nie udało się dodać przedmiotu!");
-            })
+
+                console.log('Przesłany obiekt:',obj);
+
+                let url = 'http://localhost:8080/api/auctions/create';
+                //request
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(obj)
+                })
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    else 
+                        return response.json();
+                })
+                .then(response => {
+                    // display response from server
+                    console.log('Sukces. Odebrane dane ', response);
+                    
+                    
+                })
+                .catch((error) => {
+                    console.log('Błąd', error);
+                    alert("Nie udało się dodać przedmiotu!");
+                }) 
+
+            }
         }
     },
     store: createStore,
