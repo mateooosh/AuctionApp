@@ -1,7 +1,7 @@
 <template>
     <div class="form">
-        <input class="form__input" type="text" placeholder="Czego szukasz?">
-        <button class="form__btn">Szukaj</button>
+        <input @keyup.enter="search" v-model="query" class="form__input" type="text" placeholder="Czego szukasz?">
+        <button @click="search" class="form__btn">Szukaj</button>
     </div>
 </template>
 
@@ -10,9 +10,20 @@ import { createStore } from 'vuex'
 export default {
   name: 'Navbar',
   store: createStore,
+  data(){
+      return{
+          query: '',
+      }
+  },
   methods:{
     getLogged(){
       return this.$store.state.logged;
+    },
+
+    search(){
+        if(this.query.length !== 0){
+            this.$router.push(`/oferty/${this.query}`);
+        }
     }
   }
 }

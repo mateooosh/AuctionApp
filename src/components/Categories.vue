@@ -92,10 +92,10 @@ export default {
             margin-top: 5px;
             margin-bottom: 5px;
             background-color: rgb(255, 255, 255);
+            transition:all .5s;
             &:hover{ 
                 background-color: rgb(241, 241, 241);
                 cursor: pointer;
-                transition: background-color .5s;
             }
         }
     }

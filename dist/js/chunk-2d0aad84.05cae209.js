@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0aad84"],{"136b":function(e,a,c){"use strict";c.r(a);var t=c("7a23"),n={class:"konto"},r=Object(t["g"])("h1",null,"Wygrane Licytacje",-1);function o(e,a,c,o,b,d){var j=Object(t["v"])("Navbar"),i=Object(t["v"])("Footer");return Object(t["p"])(),Object(t["c"])("div",n,[Object(t["g"])(j),r,Object(t["g"])(i)])}var b=c("d178"),d=c("fd2d"),j={name:"WygraneLicytacje",components:{Navbar:b["a"],Footer:d["a"]}};j.render=o;a["default"]=j}}]);
+//# sourceMappingURL=chunk-2d0aad84.05cae209.js.map

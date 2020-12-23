@@ -46,6 +46,11 @@ const routes = [
     path: '/rejestracja',
     name: 'Rejestracja',
     component: () => import('../views/Rejestracja.vue')
+  },
+  {
+    path: '/oferty/:query',
+    name: 'Oferty',
+    component: () => import('../views/Oferty.vue')
   }
 ]
 

@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d228886"],{da1d:function(e,c,t){"use strict";t.r(c);var a=t("7a23"),n={class:"konto"},o=Object(a["g"])("h1",null,"Moje Licytacje",-1);function r(e,c,t,r,b,d){var j=Object(a["v"])("Navbar"),i=Object(a["v"])("Footer");return Object(a["p"])(),Object(a["c"])("div",n,[Object(a["g"])(j),o,Object(a["g"])(i)])}var b=t("d178"),d=t("fd2d"),j={name:"MojeLicytacje",components:{Navbar:b["a"],Footer:d["a"]}};j.render=r;c["default"]=j}}]);
+//# sourceMappingURL=chunk-2d228886.6d6f44fd.js.map

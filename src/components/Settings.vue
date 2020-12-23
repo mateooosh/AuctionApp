@@ -118,8 +118,9 @@
             </div>
             <div  class="settings__content">
                 <div>
-                    Tutaj dorobie
+                    Przykro nam, że zawitałeś w to miejsce, mamy nadzieję, że dzięki naszemu serwisowi dokonałeś niejednego udanego zakupu! Kliknięcie na poniższy przycisk spowoduje usunięcie Twojego konta, co za tym idzie, nie będzie możliwe zalogowanie się do serwisu wdmj.pl. Jest to nieodwracalna operacja. Jednak dane Twojego konta nie zostaną usunięte z naszej bazy klientów.
                 </div>
+                <button @click="deleteAccount" class="settings__btn">Usuń konto</button>
             </div>
         </div>
     </div>
@@ -164,7 +165,7 @@ export default {
 
         if(this.$store.state.logged){
             // get personal data
-            let url = 'http://localhost:8080/api/users/personal?userId=' + this.$store.state.userId;
+            let url = 'http://localhost:8080/api/users/' + this.$store.state.userId;
 
             //request
             fetch(url)
@@ -207,7 +208,7 @@ export default {
 
             console.log('Przesłany obiekt', obj);
 
-            let url = 'http://localhost:8080/api/users/personal';
+            let url = 'http://localhost:8080/api/users/' + this.$store.state.userId + '/personal';
 
             //request
             fetch(url, {
@@ -243,7 +244,7 @@ export default {
                     newPassword: this.newPassword
                 }
 
-                let url = 'http://localhost:8080/api/users/password';
+                let url = 'http://localhost:8080/api/users/' + this.$store.state.userId + '/password';
 
                 //request
                 fetch(url, {
@@ -277,7 +278,7 @@ export default {
                     newEmail: this.newEmail
                 }
 
-                let url = 'http://localhost:8080/api/users/email';
+                let url = 'http://localhost:8080/api/users/' + this.$store.state.userId + '/email';
 
                 //request
                 fetch(url, {
@@ -300,6 +301,31 @@ export default {
                     console.log("Coś poszło nie tak z requestem: ", url);
                 })
             }
+        },
+
+        deleteAccount(){
+
+            let url = 'http://localhost:8080/api/users/'+this.$store.state.userId;
+
+            //request
+            fetch(url, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error(response.status);
+                }
+                else 
+                    return response.json();
+            })
+            .then(response => {
+                console.log('Sukces. Odebrane dane ', response);
+                alert('Konto zostało usunięte!');
+            })
+            .catch((error) => {
+                console.log('Błąd', error);
+                console.log("Coś poszło nie tak z requestem: ", url);
+            })
         },
 
         toggleContentIsVisible(index){
@@ -393,7 +419,6 @@ export default {
 
     &__option{
         margin-bottom: 30px;
-        // box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.75);
         box-shadow: 0px 2px 9px -3px rgba(0,0,0,0.75);
         
     }

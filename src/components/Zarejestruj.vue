@@ -1,32 +1,32 @@
 <template>
     <div class="register">
         <h1>Zarejestruj się</h1>        
-        <form class="register__email">
+        <form v-on:submit.prevent class="register__email">
             <label :class="{'wrong-email': !isCorrectEmail}" class="register__email__label" for="email">Adres e-mail<span style="color: red;">*</span></label>
-            <input @change="validateEmail"  v-model="email"  class="register__email__input" name="email" type="text" placeholder="Adres e-mail">
+            <input @keyup.enter="register" @change="validateEmail"  v-model="email"  class="register__email__input" name="email" type="text" placeholder="Adres e-mail">
         </form>
 
-        <form class="register__password">
+        <form v-on:submit.prevent class="register__password">
             <label :class="{'wrong-password': !isCorrectPassword}" class="register__password__label" for="password">Hasło<span style="color: red;">*</span></label>
-            <input @change="validatePassword" v-model="password"   class="register__password__input" name="password" type="password" placeholder="Hasło" autocomplete="on">
+            <input @keyup.enter="register" @change="validatePassword" v-model="password"   class="register__password__input" name="password" type="password" placeholder="Hasło" autocomplete="on">
         </form>
 
-        <form class="register__firstname">
+        <form v-on:submit.prevent class="register__firstname">
             <label :class="{'wrong-firstname': !isCorrectFirstname}"  class="register__firstname__label" for="firstname">Imię<span style="color: red;">*</span></label>
-            <input v-model="firstname" @change="isCorrectFirstname = validateMin3Char(firstname)" class="register__firstname__input" name="firstname" type="text" placeholder="Imię">
+            <input @keyup.enter="register" v-model="firstname" @change="isCorrectFirstname = validateMin3Char(firstname)" class="register__firstname__input" name="firstname" type="text" placeholder="Imię">
         </form>
 
-        <form class="register__lastname">
+        <form v-on:submit.prevent class="register__lastname">
             <label :class="{'wrong-lastname': !isCorrectLastname}"  class="register__lastname__label" for="lastname">Nazwisko<span style="color: red;">*</span></label>
-            <input v-model="lastname" @change="isCorrectLastname = validateMin3Char(lastname)" class="register__lastname__input" name="lastname" type="text" placeholder="Nazwisko">
+            <input @keyup.enter="register" v-model="lastname" @change="isCorrectLastname = validateMin3Char(lastname)" class="register__lastname__input" name="lastname" type="text" placeholder="Nazwisko">
         </form>
 
-        <form class="register__location">
+        <form v-on:submit.prevent class="register__location">
             <label :class="{'wrong-location': !isCorrectLocation}" class="register__location__label" for="location">Lokalizacja<span style="color: red;">*</span></label>
-            <input v-model="location" @change="isCorrectLocation = validateMin3Char(location)" class="register__location__input" name="location" type="text" placeholder="Miejscowość">
+            <input @keyup.enter="register" v-model="location" @change="isCorrectLocation = validateMin3Char(location)" class="register__location__input" name="location" type="text" placeholder="Miejscowość">
         </form>
 
-        <form class="register__province">
+        <form v-on:submit.prevent class="register__province">
             <label class="register__province__label" for="province">Województwo<span style="color: red;">*</span></label>
             <select @change="isCorrectProvince = true" v-model="province" class="register__province__select" name="province">
                 <option value="" disabled selected>Wybierz...</option>
@@ -49,9 +49,9 @@
             </select>
         </form>
 
-        <form class="register__phone">
+        <form v-on:submit.prevent class="register__phone">
             <label :class="{'wrong-phone': !isCorrectPhone}" class="register__phone__label" for="phone">Numer telefonu<span style="color: red;">*</span></label>
-            <input v-model="phone" @change="validatePhone" class="register__phone__input" name="phone" type="text" placeholder="Numer Telefonu">
+            <input @keyup.enter="register" v-model="phone" @change="validatePhone" class="register__phone__input" name="phone" type="text" placeholder="Numer Telefonu">
         </form>
 
         <button @click="register" class="register__btn">Zarejestruj się</button>
@@ -226,7 +226,7 @@ export default {
 
     h1{
         padding: 0;
-        margin: 0;
+        margin: 0; @keyup.enter="register"
         margin-bottom: 40px;
         text-align: left;
         font-weight: 400;

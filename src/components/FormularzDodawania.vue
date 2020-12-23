@@ -159,7 +159,7 @@ export default {
 
             console.log('Przesłany obiekt:',obj);
 
-            let url = 'http://localhost:8080/api/auction/create';
+            let url = 'http://localhost:8080/api/auctions/create';
             //request
             fetch(url, {
                 method: 'POST',

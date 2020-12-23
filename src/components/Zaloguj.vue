@@ -1,14 +1,14 @@
 <template>
     <div class="login">
         <h1>Zaloguj się</h1>
-        <form class="login__email">
+        <form v-on:submit.prevent class="login__email">
             <label :class="{'wrong-email': !isCorrectEmail}" class="login__email__label" for="email">Adres e-mail<span style="color: red;">*</span></label>
-            <input @change="validateEmail"  v-model="email" class="login__email__input" name="email" type="text" placeholder="Adres e-mail">
+            <input @keyup.enter="logIn" @change="validateEmail"  v-model="email" class="login__email__input" name="email" type="text" placeholder="Adres e-mail">
         </form>
 
-        <form class="login__password">
+        <form v-on:submit.prevent class="login__password">
             <label :class="{'wrong-password': !isCorrectPassword}" class="login__password__label" for="password">Hasło<span style="color: red;">*</span></label>
-            <input @change="validatePassword" v-model="password" class="login__password__input" name="password" type="password" placeholder="Hasło" autocomplete="on">
+            <input @keyup.enter="logIn" @change="validatePassword" v-model="password" class="login__password__input" name="password" type="password" placeholder="Hasło" autocomplete="on">
         </form>
 
         <p class="login__reset">Nie pamiętam hasła</p>
@@ -40,6 +40,9 @@ export default {
   store: createStore,
   methods:{
     //logowanie
+    onSubmit(){
+
+    },
     logIn(){
         if(this.isCorrectEmail && this.isCorrectPassword && this.didInputChanged){
             let obj = {
