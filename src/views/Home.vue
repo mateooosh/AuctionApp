@@ -3,6 +3,7 @@
     <Navbar/>
     <Search class="search"/>
     <Categories/>
+    <Najnowsze/>
     <Footer/>
   </div>
 </template>
@@ -12,6 +13,7 @@
 import Navbar from '@/components/Navbar.vue'
 import Search from '@/components/Search.vue'
 import Categories from '@/components/Categories.vue'
+import Najnowsze from '@/components/Najnowsze.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
@@ -20,6 +22,7 @@ export default {
     Navbar,
     Search,
     Categories,
+    Najnowsze,
     Footer
   }
 }

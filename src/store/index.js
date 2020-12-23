@@ -16,7 +16,8 @@ export default createStore({
   actions: {
     showInConsole(){
       console.log('tu twoj store');
-    }
+    },
+    
   },
   modules: {
   }

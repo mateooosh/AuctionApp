@@ -118,7 +118,7 @@
             </div>
             <div  class="settings__content">
                 <div>
-                    Usunięcie konta
+                    Tutaj dorobie
                 </div>
             </div>
         </div>
@@ -161,6 +161,7 @@ export default {
     },
 
     mounted(){
+
         if(this.$store.state.logged){
             // get personal data
             let url = 'http://localhost:8080/api/users/personal?userId=' + this.$store.state.userId;
