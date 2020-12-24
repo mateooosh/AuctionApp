@@ -226,7 +226,7 @@ export default {
 
     h1{
         padding: 0;
-        margin: 0; @keyup.enter="register"
+        margin: 0; 
         margin-bottom: 40px;
         text-align: left;
         font-weight: 400;
