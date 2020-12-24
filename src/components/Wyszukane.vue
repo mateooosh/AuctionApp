@@ -45,7 +45,7 @@
 
         <form class="results__min" v-on:submit.prevent>
             <label class="results__min__label" for="min">Cena</label>
-            <div style="display: flex">
+            <div>
                 <input v-model="min" class="results__min__input" name="min" type="number" placeholder="Od" min=0>
                 <input v-model="max" class="results__max__input" name="max" type="number" placeholder="Do" min=0>
             </div>
@@ -80,6 +80,8 @@
         <span style="margin: 10px 5px 0;">...</span>
         <div class="results__page">40</div>
     </div>
+
+    <button class="results__btn">Pokaż więcej</button>
   </div>
 </template>
 
@@ -125,7 +127,7 @@ export default {
     // box-shadow: 0px 0px 9px -5px rgba(0,0,0,0.75);
     width: 1000px;
     padding: 40px;
-    margin: 50px auto;
+    margin: 0 auto 50px;
     h1{
         padding: 0;
         margin: 0; 
@@ -136,13 +138,10 @@ export default {
     &__filters{
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         margin-bottom:50px;
         form{
-            margin-right: 40px;
-
-            &:last-child{
-                margin-right: 0;
-            }
+            width: 23%;
         }
     }
 
@@ -174,7 +173,7 @@ export default {
         }
 
         input{
-            width:80px;
+            width:40%;
             outline: none;
             border: none;
             border-radius: 4px;
@@ -189,7 +188,7 @@ export default {
         div{
             display: flex;
             justify-content: space-between;
-            width: 180px;
+            width: 100%;
         }
     }
 
@@ -204,7 +203,7 @@ export default {
         }
 
         select{
-            width:190px;
+            width:100%;
             outline: none;
             border: none;
             border-radius: 4px;
@@ -229,7 +228,7 @@ export default {
         }
 
         select{
-            width:160px;
+            width:100%;
             outline: none;
             border: none;
             border-radius: 4px;
@@ -266,10 +265,68 @@ export default {
             color: white;
         }
     }
+
+    &__btn{
+        display: block;
+        background-color: #007E33;
+        color: white;
+        font-size: 14px;
+        border-radius: 7px;
+        padding: 10px 30px;
+        margin: 20px auto 30px ;
+        outline: none;
+        border: none;
+        cursor: pointer;
+
+        &:hover{
+            background-color: #006428;
+            transition: background-color .5s;
+        }
+    }
 }
 
 .active{
     background-color: #007E33;
     color: white;
+}
+
+@media(max-width: 1020px){
+    .results{
+        width: 100%;
+        padding: 40px 10px;
+    }
+}
+
+@media(max-width: 800px){
+    .results{
+        &__filters{
+            margin-bottom:50px;
+            form{
+                width: 43%;
+            }
+        }
+    }
+}
+
+@media(max-width: 600px){
+    .results{
+        &__filters{
+            margin-bottom:50px;
+            form{
+                width: 48%;
+            }
+        }
+    }
+}
+
+@media(max-width: 400px){
+    .results{
+        &__filters{
+            margin-bottom:50px;
+            form{
+                width: 100%;
+            }
+        }
+    }
 }
 </style>

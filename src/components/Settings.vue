@@ -536,7 +536,7 @@ export default {
         &:hover{
             background-color: #006428;
             transition: background-color .5s;
-            }
+        }
     }
 }
 
