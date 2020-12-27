@@ -2,7 +2,9 @@
     <div class="newest">
         <h1>Najnowsze ogłoszenia</h1>
         <div class="newest__list">
-            <Card url="../assets/multipla.jpg"/>
+            
+            <Card v-for="i in 12" :key="i"/>
+            <!-- <Card/>
             <Card/>
             <Card/>
             <Card/>
@@ -12,11 +14,10 @@
             <Card/>
             <Card/>
             <Card/>
-            <Card/>
-            <Card/>
+            <Card/> -->
         </div>
 
-        <button class="newest__btn">Zobacz wszystkie</button>
+        <button @click=" getLatest()" class="newest__btn">Zobacz więcej</button>
     </div>
 </template>
 
@@ -32,12 +33,40 @@ export default {
   },
   data(){
       return{
-
+        page: 1,
       }
   },
+  mounted(){
+    this.getLatest();
+  },
   methods:{
+    // get status of user
     getLogged(){
       return this.$store.state.logged;
+    },
+
+    getLatest(){
+      let url = `http://localhost:8080/api/auctions/latest?page=${this.page}`;
+      //request
+      fetch(url)
+      .then(response => {
+          if(!response.ok) {
+              throw new Error(response.status);
+          }
+          else 
+              return response.json();
+      })
+      .then(response => {
+          // display response from server
+          console.log('Sukces. Odebrane dane ', response);
+          this.page++;
+      })
+      .catch(() => {
+          console.log('Coś poszło nie tak z requestem:', url);
+
+
+          alert("Nie udało się pobrać najnowszych aukcji!");
+      }) 
     }
   }
 }
