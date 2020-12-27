@@ -117,7 +117,7 @@
                 <i :class="{'rotate-180-deg': contentIsVisible[3]}"  class="fas fa-chevron-down fa-lg"></i>
             </div>
             <div  class="settings__content">
-                <div>
+                <div style="margin-top: 15px;">
                     Przykro nam, że zawitałeś w to miejsce, mamy nadzieję, że dzięki naszemu serwisowi dokonałeś niejednego udanego zakupu! Kliknięcie na poniższy przycisk spowoduje usunięcie Twojego konta, co za tym idzie, nie będzie możliwe zalogowanie się do serwisu wdmj.pl. Jest to nieodwracalna operacja. Jednak dane Twojego konta nie zostaną usunięte z naszej bazy klientów.
                 </div>
                 <button @click="deleteAccount" class="settings__btn">Usuń konto</button>

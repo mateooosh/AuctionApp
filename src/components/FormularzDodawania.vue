@@ -129,7 +129,11 @@ export default {
                             return response.blob();
                         })
                         .then( blob => {
-                            this.photosBlob.push(blob);
+                            // this.photosBlob.push(blob);
+
+                            // console.log(this.blobToString(blob));
+                            this.photosBlob.push(this.blobToString(blob));
+
                         }).then(() => {
                             counter++;
                             //resolve promise
@@ -143,6 +147,16 @@ export default {
                     // console.log(this.photosBlob);
                 })
             }
+        },
+
+        blobToString(b) {
+            let u, x;
+            u = URL.createObjectURL(b);
+            x = new XMLHttpRequest();
+            x.open('GET', u, false); // although sync, you're not fetching over internet
+            x.send();
+            URL.revokeObjectURL(u);
+            return x.responseText;
         },
 
         addAuction(){
