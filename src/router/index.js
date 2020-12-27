@@ -51,6 +51,11 @@ const routes = [
     path: '/oferty/:query',
     name: 'Oferty',
     component: () => import('../views/Oferty.vue')
+  },
+  {
+    path: '/kategoria/:kategoria',
+    name: 'OfertyKategoria',
+    component: () => import('../views/OfertyKategoria.vue')
   }
 ]
 

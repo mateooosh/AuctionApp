@@ -1,7 +1,10 @@
 <template>
     <div class="form">
          <!-- loading animation -->
-        <!-- <div v-if="loading" class="lds-dual-ring"></div> -->
+         <!-- <div v-if="loading" class="form__loading">
+             <div class="lds-dual-ring"></div>
+         </div> -->
+        
 
 
         <h1>Dodaj ogłoszenie</h1>
@@ -98,6 +101,7 @@ export default {
             photos: {},
             photosBlob: [],
             photosLength: 0,
+            loading: false,
         }
     },
     
@@ -131,8 +135,15 @@ export default {
                         .then( blob => {
                             // this.photosBlob.push(blob);
 
+                            var reader = new FileReader();
+                            reader.onloadend = () => {
+                                // console.log('RESULT', reader.result);
+                                this.photosBlob.push(reader.result);
+                            }
+                            reader.readAsDataURL(blob);
+
                             // console.log(this.blobToString(blob));
-                            this.photosBlob.push(this.blobToString(blob));
+                            // this.photosBlob.push(this.blobToString(blob));
 
                         }).then(() => {
                             counter++;
@@ -173,6 +184,8 @@ export default {
                     userId: this.$store.state.userId,
                 }
 
+                this.loading = true;
+
                 console.log('Przesłany obiekt:',obj);
 
                 let url = 'http://localhost:8080/api/auctions/create';
@@ -191,7 +204,6 @@ export default {
                 .then(response => {
                     // display response from server
                     console.log('Sukces. Odebrane dane ', response);
-                    
                     
                 })
                 .catch((error) => {
@@ -406,7 +418,7 @@ export default {
 //   display: block;
 //   width: 128px;
 //   height: 128px;
-//   margin: 16px;
+//   margin: 16px auto;
 //   border-radius: 50%;
 //   border: 12px solid rgb(0, 0, 0);
 //   border-color: rgb(0, 0, 0) transparent rgb(0, 0, 0) transparent;
@@ -419,5 +431,17 @@ export default {
 //   100% {
 //     transform: rotate(360deg);
 //   }
+// }
+
+// .form__loading{
+//     z-index: 20;
+//     position: fixed;
+//     left: 0;
+//     top: 0;
+//     width: 100%;
+//     height: 100vh;
+//     background-color: rgba(56, 56, 56, 0.233) ;
+//     display: flex;
+//     justify-content: center;
 // }
 </style>
