@@ -26,9 +26,9 @@
             </select>
         </form>
 
-        <form class="results__category" v-on:submit.prevent>
+        <form class="results__category" v-on:submit.prevent v-if="catIsVisible">
             <label class="results__category__label" for="category">Kategoria</label>
-            <select v-model="cat" class="results__category__select" name="category"  @change="changeOption" :value="category">
+            <select v-model="category" class="results__category__select" name="category">
                 <option value="" selected >Wybierz...</option>
                 <option value="nieruchomości">Nieruchomości</option>
                 <option value="motoryzacja">Motoryzacja</option>
@@ -60,7 +60,7 @@
             </select>
         </form>
     </div>
-    <h1 style="margin-bottom: 40px;">Wyniki wyszukiwania <span v-if="query!=null">dla "{{query}}"</span></h1>
+    <h1 style="margin-bottom: 40px;">Wyniki wyszukiwania <span v-if="query!=null">dla "{{query}}"</span> <span v-if="kategoria!=null">dla kategorii "{{kategoria}}"</span></h1>
     <!-- <h1 v-if="kategoria!=null">{{kategoria}}</h1> -->
     <Card2/>
     <Card2/>
@@ -88,12 +88,13 @@ export default {
   data(){
       return{
           province: 'Wybierz...',
-        //   category: 'Wybierz...',
+          category: 'Wybierz...',
           min: '',
           max: '',
           order: 'Najnowsze',
           page: 1,
           cat: '',
+          catIsVisible: true,
       }
   },
   props:{
@@ -105,20 +106,16 @@ export default {
       console.log(this.kategoria);
 
       if(this.kategoria !== undefined){
-        this.cat = this.kategoria;
+        this.category = this.kategoria;
+        this.catIsVisible = false;
       }
   },
   methods:{
 
-      changeOption(){
-            this.$router.push(`/kategoria/${this.cat}`);
-            // console.log("changed")
-      }
+      
   },
   computed:{
-      category: function(){
-          return this.kategoria;
-      }
+      
   }
 }
 </script>
