@@ -28,18 +28,18 @@
 
         <form class="results__category" v-on:submit.prevent>
             <label class="results__category__label" for="category">Kategoria</label>
-            <select v-model="category" class="results__category__select" name="category">
+            <select v-model="cat" class="results__category__select" name="category"  @change="changeOption" :value="category">
                 <option value="" selected >Wybierz...</option>
-                <option value="Nieruchomości">Nieruchomości</option>
-                <option value="Motoryzacja">Motoryzacja</option>
-                <option value="Rolnictwo">Rolnictwo</option>
-                <option value="Elektronika">Elektronika</option>
-                <option value="Sport">Sport</option>
-                <option value="Zwierzęta">Zwierzęta</option>
-                <option value="Praca">Praca</option>
-                <option value="Dla dzieci">Dla dzieci</option>
-                <option value="Moda">Moda</option>
-                <option value="Pozostałe">Pozostałe</option>
+                <option value="nieruchomości">Nieruchomości</option>
+                <option value="motoryzacja">Motoryzacja</option>
+                <option value="rolnictwo">Rolnictwo</option>
+                <option value="elektronika">Elektronika</option>
+                <option value="sport">Sport</option>
+                <option value="zwierzęta">Zwierzęta</option>
+                <option value="ogród">Ogród</option>
+                <option value="dzieci">Dzieci</option>
+                <option value="moda">Moda</option>
+                <option value="pozostałe">Pozostałe</option>
             </select>
         </form>
 
@@ -60,7 +60,8 @@
             </select>
         </form>
     </div>
-    <h1 style="margin-bottom: 40px;">Wyniki wyszukiwania dla "{{query}}"</h1>
+    <h1 style="margin-bottom: 40px;">Wyniki wyszukiwania <span v-if="query!=null">dla "{{query}}"</span></h1>
+    <!-- <h1 v-if="kategoria!=null">{{kategoria}}</h1> -->
     <Card2/>
     <Card2/>
     <Card2/>
@@ -71,15 +72,6 @@
     <Card2/>
     <Card2/>
     <Card2/>
-
-    <div class="results__pagination">
-        <div @click="changePage(1)" class="results__page" :class="{'active': page===1}">1</div>
-        <div @click="changePage(2)" class="results__page" :class="{'active': page===2}">2</div>
-        <div @click="changePage(3)" class="results__page" :class="{'active': page===3}">3</div>
-        <div @click="changePage(4)" class="results__page" :class="{'active': page===4}">4</div>
-        <span style="margin: 10px 5px 0;">...</span>
-        <div class="results__page">40</div>
-    </div>
 
     <button class="results__btn">Pokaż więcej</button>
   </div>
@@ -96,22 +88,36 @@ export default {
   data(){
       return{
           province: 'Wybierz...',
-          category: 'Wybierz...',
+        //   category: 'Wybierz...',
           min: '',
           max: '',
           order: 'Najnowsze',
           page: 1,
+          cat: '',
       }
   },
   props:{
       query: String,
+      kategoria: String,
   },
   mounted(){
-      console.log(this.$route.params.query);
+      console.log(this.query);
+      console.log(this.kategoria);
+
+      if(this.kategoria !== undefined){
+        this.cat = this.kategoria;
+      }
   },
   methods:{
-      changePage(p){
-          this.page = p;
+
+      changeOption(){
+            this.$router.push(`/kategoria/${this.cat}`);
+            // console.log("changed")
+      }
+  },
+  computed:{
+      category: function(){
+          return this.kategoria;
       }
   }
 }
@@ -242,29 +248,7 @@ export default {
         }
     }
 
-    &__pagination{
-        display: flex;
-        justify-content: center;
-    }
-
-    &__page{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-        border: 2px solid #007E33;
-        border-radius: 5px;
-        text-align: center;
-        margin: 5px;
-        cursor: pointer;
-        transition: background-color .1s;
-        &:hover{
-            background-color: #007E33;
-            color: white;
-        }
-    }
+    
 
     &__btn{
         display: block;

@@ -166,7 +166,7 @@ export default {
         if(this.$store.state.logged){
             // get personal data
             let url = 'http://localhost:8080/api/users/' + this.$store.state.userId;
-
+            console.log(this.$store.state.userId);
             //request
             fetch(url)
             .then(response => {

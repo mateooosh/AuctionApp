@@ -1,18 +1,19 @@
 <template>
     <div class="card__frame">
         <div class="card__photo"></div>
-        <p class="card__title">Fiat Multipla Rodzinna Ropucha silnik nie stuka, nic nie puka </p>
-        <p class="card__location">Kielce (świętokrzyskie)</p>
+        <!-- <p class="card__title">Fiat Multipla Rodzinna Ropucha silnik nie stuka, nic nie puka </p> -->
+        <p class="card__title">{{title}} </p>
+        <p class="card__location">{{location}} ({{province}})</p>
 
         <div style="display: flex; justify-content: space-between; align-items: center">
             <div>
                 <p class="card__startingPrice">Cena aktualna</p>
-                <p class="card__price">9999 zł</p>
+                <p class="card__price">{{actualPrice}} zł</p>
             </div>
             
             <div>
                 <p class="card__instantPrice">Cena błyskawiczna</p>
-                <p class="card__price">19999 zł</p>
+                <p class="card__price">{{instantPrice}} zł</p>
             </div>
 
             <i @click="addToFavorites" class="far fa-heart fa-lg"></i>
@@ -29,14 +30,20 @@ export default {
       title: String,
       location: String,
       province: String,
-      startingPrice: Number,
+      actualPrice: Number,
       instantPrice: Number,
       url: String,
+      i: Number
   },
   methods:{
       addToFavorites(){
           alert("dodaj do ulubionych");
       },
+  },
+  mounted(){
+    //   console.log(this.url);
+      let element = document.getElementsByClassName("card__photo")[this.i];
+      element.style.backgroundImage = `url(${this.url}`;
   }
 }
 </script>

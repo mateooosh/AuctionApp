@@ -3,8 +3,8 @@
     <Navbar/>
     <Search class="search"/>
     <!-- <h1>OFERTY</h1> -->
-    {{kategoria}}
-    <!-- <Wyszukane :query="query"/> -->
+    <!-- {{kategoria}} -->
+    <Wyszukane :kategoria="kategoria"/>
     <!-- <Wyszukane v-if="query.length!=0" :query="query"/> -->
     <Footer/>
   </div>
@@ -14,7 +14,7 @@
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue'
 import Search from '@/components/Search.vue'
-// import Wyszukane from '@/components/Wyszukane.vue'
+import Wyszukane from '@/components/Wyszukane.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
@@ -27,7 +27,7 @@ export default {
   components: {
     Navbar,
     Search,
-    // Wyszukane,
+    Wyszukane,
     Footer
   },
   computed:{
@@ -36,7 +36,8 @@ export default {
     }
   },
   mounted(){
-      console.log(this.$route.params.kategoria);
+      // console.log(this.$route.params.kategoria);
+      
   },
   methods:{
     getKategoria(v){

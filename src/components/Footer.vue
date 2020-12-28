@@ -4,16 +4,49 @@
           <div class="footer__categories">
             <h3>KATEGORIE</h3>
             <ul>
-              <li>Nieruchomości</li>
-              <li>Motoryzacja</li>
-              <li>Rolnictwo</li>
-              <li>Elektronika</li>
-              <li>Sport</li>
-              <li>Zwierzęta</li>
-              <li>Praca</li>
-              <li>Dla dzieci</li>
-              <li>Moda</li>
-              <li>Pozostałe</li>
+              
+              <router-link to="/kategoria/nieruchomości">
+                <li>Nieruchomości</li>
+              </router-link>
+              
+              <router-link to="/kategoria/motoryzacja">
+                <li>Motoryzacja</li>
+              </router-link>
+              
+              <router-link to="/kategoria/rolnictwo">
+                <li>Rolnictwo</li>
+              </router-link>
+              
+              <router-link to="/kategoria/elektronika">
+                <li>Elektronika</li>
+              </router-link>
+              
+              <router-link to="/kategoria/sport">
+                <li>Sport</li>
+              </router-link>
+              
+              <router-link to="/kategoria/zwierzęta">
+                <li>Zwierzęta</li>
+              </router-link>
+
+              <router-link to="/kategoria/ogród">
+                <li>Ogród</li>
+              </router-link>
+              
+              <router-link to="/kategoria/dzieci">
+                <li>Dzieci</li>
+              </router-link>
+              
+
+              <router-link to="/kategoria/moda">
+                <li>Moda</li>
+              </router-link>
+              
+              
+              <router-link to="/kategoria/pozostałe">
+                <li>Pozostałe</li>
+              </router-link>
+
             </ul>
           </div>
           <div class="footer__about-us">
@@ -60,9 +93,10 @@ ul{
   display: flex;
   flex-wrap: wrap;
   padding-inline-start: 20px;
-  li{
+  a{ 
     width: 50%;
     cursor: pointer;
+    color: #bdbdbd;
 
     &:hover{
       color: rgb(224, 224, 224);
@@ -109,7 +143,7 @@ ul{
 }
 
 @media(max-width:1500px){
-  li{
+  a{
     width: 100% !important;
   }
 }
@@ -118,7 +152,7 @@ ul{
   h3{
     text-align: center;
   }
-  li{
+  a{
     width: 50% !important;
     text-align: left;
   }

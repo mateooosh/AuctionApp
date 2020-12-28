@@ -26,16 +26,16 @@
             <label class="register__category__label" for="category">Kategoria<span style="color: red;">*</span></label>
             <select v-model="category" class="register__category__select" name="category">
                 <option value="" disabled selected>Wybierz...</option>
-                <option value="Nieruchomości">Nieruchomości</option>
-                <option value="Motoryzacja">Motoryzacja</option>
-                <option value="Rolnictwo">Rolnictwo</option>
-                <option value="Elektronika">Elektronika</option>
-                <option value="Sport">Sport</option>
-                <option value="Zwierzęta">Zwierzęta</option>
-                <option value="Praca">Praca</option>
-                <option value="Dla dzieci">Dla dzieci</option>
-                <option value="Moda">Moda</option>
-                <option value="Pozostałe">Pozostałe</option>
+                <option value="nieruchomości">Nieruchomości</option>
+                <option value="motoryzacja">Motoryzacja</option>
+                <option value="rolnictwo">Rolnictwo</option>
+                <option value="elektronika">Elektronika</option>
+                <option value="sport">Sport</option>
+                <option value="zwierzęta">Zwierzęta</option>
+                <option value="ogród">Ogród</option>
+                <option value="dzieci">Dzieci</option>
+                <option value="moda">Moda</option>
+                <option value="pozostałe">Pozostałe</option>
             </select>
         </form>
 

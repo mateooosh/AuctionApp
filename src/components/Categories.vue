@@ -2,46 +2,80 @@
     <div class="categories">
         <h1>Kategorie</h1>
         <div class="categories__list">
-            <div>
-                <img src="../assets/icons/nieruchomosci.svg" alt="Nieruchomosci" height="45">
-                <div>Nieruchomości</div>
-            </div>
-            <div>
-                <img src="../assets/icons/motoryzacja.svg" alt="Motoryzacja" height="45">
-                <div>Motoryzacja</div>
-            </div>
-            <div>
-                <img src="../assets/icons/rolnictwo.svg" alt="Rolnictwo" height="45">
-                <div>Rolnictwo</div>
-            </div>
-            <div>
-                <img src="../assets/icons/elektronika.svg" alt="Elektronika" height="45">
-                <div>Elektronika</div>
-            </div>
-            <div>
-                <img src="../assets/icons/sport.svg" alt="Sport" height="45">
-                <div>Sport</div>
-            </div>
-            <div>
-                <img src="../assets/icons/zwierzeta.svg" alt="Zwierzęta" height="45">
-                <div>Zwierzęta</div>
-            </div>
-            <div>
-                <img src="../assets/icons/praca.svg" alt="Praca" height="45">
-                <div>Praca</div>
-            </div>
-            <div>
-                <img src="../assets/icons/dla_dzieci.svg" alt="Dla_dzieci" height="45">
-                <div>Dla dzieci</div>
-            </div>
-            <div>
-                <img src="../assets/icons/moda.svg" alt="Moda" height="45">
-                <div>Moda</div>
-            </div>
-            <div>
-                <img src="../assets/icons/inne.svg" alt="Pozostałe" height="45">
-                <div>Pozostałe</div>
-            </div>
+            <router-link to="/kategoria/nieruchomości">
+                <div>
+                    <img src="../assets/icons/nieruchomosci.svg" alt="Nieruchomosci" height="45">
+                    <div>Nieruchomości</div>
+                </div>
+            </router-link>
+
+            <router-link to="/kategoria/motoryzacja">
+                <div>
+                    <img src="../assets/icons/motoryzacja.svg" alt="Motoryzacja" height="45">
+                    <div>Motoryzacja</div>
+                </div>
+            </router-link>
+            
+            <router-link to="/kategoria/rolnictwo">
+                <div>
+                    <img src="../assets/icons/rolnictwo.svg" alt="Rolnictwo" height="45">
+                    <div>Rolnictwo</div>
+                </div>
+            </router-link>
+
+            <router-link to="/kategoria/elektronika">
+                <div>
+                    <img src="../assets/icons/elektronika.svg" alt="Elektronika" height="45">
+                    <div>Elektronika</div>
+                </div>
+            </router-link>
+            
+            
+            <router-link to="/kategoria/sport">
+                <div>
+                    <img src="../assets/icons/sport.svg" alt="Sport" height="45">
+                    <div>Sport</div>
+                </div>
+            </router-link>
+
+            <router-link to="/kategoria/zwierzęta">
+                <div>
+                    <img src="../assets/icons/zwierzeta.svg" alt="Zwierzęta" height="45">
+                    <div>Zwierzęta</div>
+                </div>
+            </router-link>
+            
+            
+            <router-link to="/kategoria/ogród">
+                <div>
+                    <img src="../assets/icons/ogrod.svg" alt="Ogród" height="45">
+                    <div>Ogród</div>
+                </div>
+            </router-link>
+            
+            <router-link to="/kategoria/dzieci">
+                <div>
+                    <img src="../assets/icons/dla_dzieci.svg" alt="Dla_dzieci" height="45">
+                    <div>Dzieci</div>
+                </div>
+            </router-link>
+            
+
+            <router-link to="/kategoria/moda">
+                <div>
+                    <img src="../assets/icons/moda.svg" alt="Moda" height="45">
+                    <div>Moda</div>
+                </div>
+            </router-link>
+
+            <router-link to="/kategoria/pozostałe">
+                <div>
+                    <img src="../assets/icons/inne.svg" alt="Pozostałe" height="45">
+                    <div>Pozostałe</div>
+                </div>
+            </router-link>
+            
+            
         </div>
     </div>
 </template>
@@ -80,7 +114,7 @@ export default {
         justify-content: space-around;
         flex-wrap: wrap;
 
-        >div{
+        >a{
             border-radius: 6px;
             width: 160px;
             text-align: center;
