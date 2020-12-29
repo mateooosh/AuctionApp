@@ -10,7 +10,7 @@
       
       <div class="nav__header">
 
-        <div v-if="!this.$store.state.logged" class="nav__account ml-70">
+        <div v-if="!this.$store.state.logged" class="nav__account ml-20">
           <div @click="toggleMyAccountIsVisible" style="display: flex; align-items: center;">
             <!-- <img src="../assets/icons/person.svg" alt="person" width="30"> -->
             <i class="fas fa-user fa-lg"></i>
@@ -33,11 +33,12 @@
           
         </div>
       
-        <div v-if="this.$store.state.logged" class="nav__account ml-70" >
+        <div v-if="this.$store.state.logged" class="nav__account ml-20" >
           <div @click="toggleMyAccountIsVisible" style="display: flex; align-items: center;">
             <!-- <img src="../assets/icons/person.svg" alt="person" width="30"> -->
             <i class="fas fa-user fa-lg"></i>
-            <div>Moje konto</div>
+            <div v-if="userEmail.length !== 0">{{userEmail}}</div>
+            <div v-else>Moje konto</div>
           </div>
           
           <div class="nav__account__menu" v-if="myAccountIsVisible" >
@@ -77,7 +78,7 @@
           </div>
         </div>
 
-        <router-link to="/dodaj-ogloszenie" class="ml-70">
+        <router-link to="/dodaj-ogloszenie" class="ml-20">
           <button class="nav__btn">
             Dodaj ogłoszenie 
           </button>
@@ -94,10 +95,22 @@ export default {
   data(){
     return{
       myAccountIsVisible: false,
+      userEmail: ''
     }
   },
+
+
+
+  mounted(){
+    this.userEmail = this.getEmail();
+    // console.log("Mounted navbar")
+  },
+
   methods:{
     // return statement
+    getEmail(){
+      return this.$store.state.userEmail;
+    },
     getLogged(){
       return this.$store.state.logged;
     },
@@ -110,6 +123,8 @@ export default {
     logOut(){
       this.myAccountIsVisible = false;
       this.$store.commit('logged', false);
+      this.$store.commit('userId', '');
+      this.$store.commit('userEmail', '');
       alert("Wylogowano!")
       this.$router.push("/");
     }
@@ -238,7 +253,7 @@ export default {
   }
 }
 
-.ml-70{
-  margin-left: 70px;
+.ml-20{
+  margin-left: 20px;
 }
 </style>

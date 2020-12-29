@@ -3,6 +3,7 @@
         <div class="card__photo"></div>
         <!-- <p class="card__title">Fiat Multipla Rodzinna Ropucha silnik nie stuka, nic nie puka </p> -->
         <p class="card__title">{{title}} </p>
+        <p class="card__category">{{category}}</p>
         <p class="card__location">{{location}} ({{province}})</p>
 
         <div style="display: flex; justify-content: space-between; align-items: center">
@@ -26,14 +27,15 @@
 export default {
   name: 'Card',
   props:{
+      actualPrice: Number,
       auctionId: Number,
-      title: String,
+      category: String,
+      i: Number,
+      instantPrice: Number,
       location: String,
       province: String,
-      actualPrice: Number,
-      instantPrice: Number,
+      title: String,
       url: String,
-      i: Number
   },
   methods:{
       addToFavorites(){
@@ -52,7 +54,7 @@ export default {
 .card{
     &__frame{
         width: 322px;
-        height: 350px;
+        height: 360px;
         margin-bottom:30px;
         padding: 14px;
         box-shadow: 0 2px 9px 0 rgba(0,0,0,0.25);
@@ -78,9 +80,15 @@ export default {
 
     }
 
-    &__title, &__location, &__startingPrice, &__instantPrice, &__price{
+    &__title, &__location, &__startingPrice, &__instantPrice, &__price, &__category{
         margin: 0;
         padding: 0;
+    }
+
+    &__category{
+        font-size: 13px;
+        font-weight: 400;
+        margin-top: 5px;
     }
 
     &__title{
@@ -91,7 +99,7 @@ export default {
     }
 
     &__location{
-        margin: 5px 0 20px;
+        margin: 10px 0 5px;
         color: rgb(105, 105, 105); 
         font-size: 12px;
         font-weight: 400;

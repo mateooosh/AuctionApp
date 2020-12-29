@@ -10,27 +10,17 @@
             
             <Card v-for="(auction, i) in auctions" :key="i" 
                 :title="auction.auctiontitle" 
-                :location="auction.location" 
+                :location="auction.location"
+                :category="auction.category" 
                 :province="auction.province" 
                 :actualPrice="auction.maxBidPrice"
                 :instantPrice="auction.buyNowPrice"
                 :url="auction.photo"
                 :i="i"
             />
-            <!-- <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/>
-            <Card/> -->
         </div>
 
-        <button v-if="gotData" @click="getLatest()" class="newest__btn">Zobacz więcej</button>
+        <button v-if="gotData && auctions.length%12==0" @click="getLatest()" class="newest__btn">Zobacz więcej</button>
     </div>
 </template>
 
@@ -78,10 +68,7 @@ export default {
         .then(response => {
             // display response from server
             console.log('Sukces. Odebrane dane ', response);
-            //   if(this.page < 2)
-            //     this.auctions = response;
-            //   else
-                this.auctions = this.auctions.concat(response);
+            this.auctions = this.auctions.concat(response);
 
             this.gotData = true;
             this.page++;

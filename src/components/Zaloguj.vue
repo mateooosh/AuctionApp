@@ -70,6 +70,7 @@ export default {
                 //przekieruj na strone startową
                 this.$store.commit('logged', true);
                 this.$store.commit('userId', response.userId);
+                this.$store.commit('userEmail', response.email);
                 this.$router.push("/");
                 
             })

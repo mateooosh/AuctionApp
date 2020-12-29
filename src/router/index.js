@@ -53,6 +53,11 @@ const routes = [
     component: () => import('../views/Oferty.vue')
   },
   {
+    path: '/oferta/:idAukcji',
+    name: 'Oferta',
+    component: () => import('../views/Oferta.vue')
+  },
+  {
     path: '/kategoria/:kategoria',
     name: 'OfertyKategoria',
     component: () => import('../views/OfertyKategoria.vue')
