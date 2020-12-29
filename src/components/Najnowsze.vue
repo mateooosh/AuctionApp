@@ -3,9 +3,8 @@
         <h1>Najnowsze ogłoszenia</h1>
 
         <!-- loading animation -->
-        <!-- <div class="lds-dual-ring"></div> -->
-        
         <div v-if="!gotData" class="lds-dual-ring"></div>
+        
 
         <div v-if="gotData" class="newest__list" >
             
