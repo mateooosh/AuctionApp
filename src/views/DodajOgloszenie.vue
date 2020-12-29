@@ -7,16 +7,25 @@
 </template>
 
 <script>
+import { createStore } from 'vuex'
+
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
 import FormularzDodawania from '@/components/FormularzDodawania.vue'
 
 export default {
   name: 'DodajOgloszenie',
+  store: createStore,
   components: {
     Navbar,
     Footer,
     FormularzDodawania,
+  },
+  mounted(){
+    if(!this.$store.state.logged){
+      alert("Aby dodać aukcję, najpierw musisz się zalogować");
+      this.$router.push("/logowanie");
+    }
   }
 }
 </script>

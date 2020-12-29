@@ -7,12 +7,12 @@
 
         <div style="display: flex; justify-content: space-between; align-items: center">
             <div>
-                <p class="card__startingPrice">Cena aktualna</p>
+                <p class="card__startingPrice">Licytuj</p>
                 <p class="card__price">{{actualPrice}} zł</p>
             </div>
             
             <div>
-                <p class="card__instantPrice">Cena błyskawiczna</p>
+                <p class="card__instantPrice">Kup Teraz</p>
                 <p class="card__price">{{instantPrice}} zł</p>
             </div>
 

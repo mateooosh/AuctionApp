@@ -99,7 +99,7 @@ export default {
             instantPrice: '',
             description: '',
             photos: {},
-            photosBlob: [],
+            photosBlob: [], //not blob, base64
             photosLength: 0,
             loading: false,
         }
@@ -120,7 +120,7 @@ export default {
                 for(let i=0; i<this.photos.length; i++){
                     out[i].src = URL.createObjectURL(this.photos[i]);
                     out[i].onload = function() {
-                        URL.revokeObjectURL(out[i].src) 
+                        URL.revokeObjectURL(out[i].src); 
                     }
                 }
 
@@ -133,17 +133,11 @@ export default {
                             return response.blob();
                         })
                         .then( blob => {
-                            // this.photosBlob.push(blob);
-
                             var reader = new FileReader();
                             reader.onloadend = () => {
-                                // console.log('RESULT', reader.result);
                                 this.photosBlob.push(reader.result);
                             }
                             reader.readAsDataURL(blob);
-
-                            // console.log(this.blobToString(blob));
-                            // this.photosBlob.push(this.blobToString(blob));
 
                         }).then(() => {
                             counter++;
@@ -158,16 +152,6 @@ export default {
                     // console.log(this.photosBlob);
                 })
             }
-        },
-
-        blobToString(b) {
-            let u, x;
-            u = URL.createObjectURL(b);
-            x = new XMLHttpRequest();
-            x.open('GET', u, false); // although sync, you're not fetching over internet
-            x.send();
-            URL.revokeObjectURL(u);
-            return x.responseText;
         },
 
         addAuction(){
@@ -204,7 +188,8 @@ export default {
                 .then(response => {
                     // display response from server
                     console.log('Sukces. Odebrane dane ', response);
-                    
+                    alert("Utworzono aukcję");
+                    this.$router.push("/");
                 })
                 .catch((error) => {
                     console.log('Błąd', error);

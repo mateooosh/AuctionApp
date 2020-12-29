@@ -66,7 +66,7 @@ export default {
             .then(response => {
                 //wyswietl zwrocone dane
                 console.log('Sukces. Odebrane dane ', response);
-
+                alert("Udało się zalogować!");
                 //przekieruj na strone startową
                 this.$store.commit('logged', true);
                 this.$store.commit('userId', response.userId);

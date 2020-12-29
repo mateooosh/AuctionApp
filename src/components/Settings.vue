@@ -135,11 +135,11 @@ export default {
     data(){
         return{
             contentIsVisible: [false, false, false, false],
-            firstname: 'Mateusz',
-            lastname: 'Bujak',
-            location: 'Kielce',
-            province: 'świętokrzyskie',
-            phone: '123456789',
+            firstname: '',
+            lastname: '',
+            location: '',
+            province: '',
+            phone: '',
             isCorrectEmail: true,
             isCorrectPassword: true,
             isCorrectFirstname: true,
