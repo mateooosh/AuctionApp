@@ -9,6 +9,7 @@
         <div v-if="gotData" class="newest__list" >
             
             <Card v-for="(auction, i) in auctions" :key="i" 
+                :auctionId="auction.auctionId"
                 :title="auction.auctiontitle" 
                 :location="auction.location"
                 :category="auction.category" 

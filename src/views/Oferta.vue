@@ -3,8 +3,9 @@
     <Navbar/>
     <Search class="search"/>
     <!-- <h1>OFERTY</h1> -->
-    <SzczegolyOferty :idAukcji="idAukcji"/>
-    idAukcji: {{idAukcji}}
+    
+    <!-- Force component to rerender -->
+    <SzczegolyOferty :key="$route.params.auctionId"/>
     <Footer/>
   </div>
 </template>
@@ -20,7 +21,7 @@ export default {
   name: 'Oferta',
   data(){
     return{
-    //   idAukcji: '',
+
     }
   },
   components: {
@@ -29,13 +30,8 @@ export default {
     SzczegolyOferty,
     Footer
   },
-  computed:{
-    idAukcji: function() {
-        return this.$route.params.idAukcji;
-    }
-  },
   mounted(){
-      console.log(this.$route.params.idAukcji);
+    
   },
   methods:{
     

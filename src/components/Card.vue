@@ -1,8 +1,8 @@
 <template>
     <div class="card__frame">
-        <div class="card__photo"></div>
+        <div @click="pushToAuction()" class="card__photo"></div>
         <!-- <p class="card__title">Fiat Multipla Rodzinna Ropucha silnik nie stuka, nic nie puka </p> -->
-        <p class="card__title">{{title}} </p>
+        <p @click="pushToAuction()" class="card__title">{{title}} </p>
         <p class="card__category">{{category}}</p>
         <p class="card__location">{{location}} ({{province}})</p>
 
@@ -41,6 +41,10 @@ export default {
       addToFavorites(){
           alert("dodaj do ulubionych");
       },
+      pushToAuction(){
+        //   console.log("push to auction id: "+this.auctionId);
+          this.$router.push(`/oferta/${this.auctionId}`);
+      }
   },
   mounted(){
     //   console.log(this.url);
