@@ -189,6 +189,9 @@ export default {
                 console.log("Coś poszło nie tak z requestem na adres: ", url);
             })
         }
+        else{
+            this.$router.push('/');
+        }
     },
 
     methods:{
@@ -321,6 +324,10 @@ export default {
             .then(response => {
                 console.log('Sukces. Odebrane dane ', response);
                 alert('Konto zostało usunięte!');
+                this.$store.commit('logged', false);
+                this.$store.commit('userId', '');
+                this.$store.commit('userEmail', '');
+                this.$router.push('/');
             })
             .catch((error) => {
                 console.log('Błąd', error);

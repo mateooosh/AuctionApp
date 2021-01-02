@@ -51,7 +51,8 @@
                     <div class="details__price">{{details.maxBidPrice}} zł</div>
                     <form class="details__form__actualPrice">
                         <label class="details__form__actualPrice__label" for="actualPrice"></label>
-                        <input v-model="offer" class="details__form__actualPrice__input" :min="details.maxBidPrice+1" name="actualPrice" type="number" placeholder="Twoja oferta">
+                        <input v-model="offer" class="details__form__actualPrice__input" :min="details.maxBidPrice+1" 
+                        :max="details.buyNowPrice-1" name="actualPrice" type="number" placeholder="Twoja oferta">
                     </form>
                     <button @click="bid" class="details__btn">Licytuj</button>
 
@@ -124,7 +125,7 @@ export default {
   },
 
   mounted(){
-        window.scrollTo(0,150);
+        window.scrollTo(0,0);
         this.auctionId = this.$route.params.auctionId;
 
         const url = `http://localhost:8080/api/auction/${this.auctionId}`;
@@ -183,14 +184,145 @@ export default {
     },
 
     addToFavorites(){
-        alert("dodaj do ulubionych");
+        if(this.$store.state.logged){
+            let obj = {
+                userId: this.$store.state.userId,
+                auctionId: this.details.auctionId,
+            }
+
+            console.log('Przesłany obiekt', obj);
+
+            let url = 'http://localhost:8080/api/auctions/' + this.$store.state.userId + '/favorite';
+
+            //request
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(obj),
+            })
+            .then(response => {
+                if(!response.ok) {
+                    throw new Error(response.status);
+                }
+                else 
+                    return response.json();
+            })
+            .then(response => {
+                console.log('Sukces. Odebrane dane ', response);
+                alert('Dodano aukcję do ulubionych!');
+            })
+            .catch((error) => {
+                console.log('Błąd', error);
+                alert("Coś poszło nie tak!");
+            })
+          }
+          else{
+            alert("Aby dodać aukcję do ulubionych musisz być zalogowany!");
+          }
     },
 
     bid(){
-        alert("Tu bedzie licytowanie");
+        if(this.details.auctionState === 1){
+            if(this.$store.state.logged){
+                if(this.details.authorEmail === this.$store.state.userEmail){
+                    alert("Nie możesz licytować własnych aukcji!");
+                }
+                else{
+                    let obj = {
+                        userId: this.$store.state.userId,
+                        auctionId: this.details.auctionId,
+                        offer: this.offer
+                    }
+
+                    console.log('Przesłany obiekt:',obj);
+
+                    let url = `http://localhost:8080/api/auction/${this.details.auctionId}/bid`;
+                    //request
+                    fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(response => {
+                        if(!response.ok) {
+                            throw new Error(response.status);
+                        }
+                        else 
+                            return response.json();
+                    })
+                    .then(response => {
+                        // display response from server
+                        console.log('Sukces. Odebrane dane ', response);
+                        alert("Złożono ofertę!");
+                    })
+                    .catch((error) => {
+                        console.log('Błąd', error);
+                        alert("Nie udało się złożyć oferty!");
+                    }) 
+                }
+                
+            }
+
+            else{
+                alert("Musisz być zalogowany aby móc licytować przedmioty! Zaloguj się");
+                this.$router.push("/logowanie");
+            }
+        }
+
+        else{
+            alert("Aukcja została zakończona!");
+        }
+        
+
+        
     },
     buyNow(){
-        alert("Tu bedzie kupowanie");
+        if(this.details.auctionState === 1){
+            if(this.$store.state.logged){
+                if(this.details.authorEmail === this.$store.state.userEmail){
+                    alert("Nie możesz kupować własnych przedmiotów!");
+                }
+                else{
+                    let obj = {
+                        userId: this.$store.state.userId,
+                        auctionId: this.details.auctionId
+                    }
+
+                    console.log('Przesłany obiekt:',obj);
+
+                    let url = `http://localhost:8080/api/auction/${this.details.auctionId}/buy`;
+                    //request
+                    fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(response => {
+                        if(!response.ok) {
+                            throw new Error(response.status);
+                        }
+                        else 
+                            return response.json();
+                    })
+                    .then(response => {
+                        // display response from server
+                        console.log('Sukces. Odebrane dane ', response);
+                        alert("Przedmiot został kupiony!");
+                    })
+                    .catch((error) => {
+                        console.log('Błąd', error);
+                        alert("Nie udało się kupić przedmiotu!");
+                    }) 
+                }
+                
+            }
+
+            else{
+                alert("Musisz być zalogowany aby móc kupować przedmioty! Zaloguj się");
+                this.$router.push("/logowanie");
+            }
+        }
+
+        else{
+            alert("Aukcja została zakończona!");
+        }
     }
   },
 }
@@ -425,6 +557,10 @@ export default {
             justify-content: space-around;
             margin-top: 30px;
         }
+
+        &__bid, &__buyNow{
+            width: 40%;
+        }
     }
 
     .carousel-cell {
@@ -460,6 +596,14 @@ export default {
     .details{
         &__auction{
             flex-direction: column;
+        }
+
+        &__bid, &__buyNow{
+            width: 100%;
+        }
+
+        &__buyNow{
+            margin-top: 20px;
         }
     }
 }

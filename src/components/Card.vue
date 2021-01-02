@@ -25,32 +25,66 @@
 <script>
 
 export default {
-  name: 'Card',
-  props:{
-      actualPrice: Number,
-      auctionId: Number,
-      category: String,
-      i: Number,
-      instantPrice: Number,
-      location: String,
-      province: String,
-      title: String,
-      url: String,
-  },
-  methods:{
-      addToFavorites(){
-          alert("dodaj do ulubionych");
-      },
-      pushToAuction(){
-        //   console.log("push to auction id: "+this.auctionId);
-          this.$router.push(`/oferta/${this.auctionId}`);
-      }
-  },
-  mounted(){
-    //   console.log(this.url);
-      let element = document.getElementsByClassName("card__photo")[this.i];
-      element.style.backgroundImage = `url(${this.url}`;
-  }
+    name: 'Card',
+    props:{
+        actualPrice: Number,
+        auctionId: Number,
+        category: String,
+        i: Number,
+        instantPrice: Number,
+        location: String,
+        province: String,
+        title: String,
+        url: String,
+    },
+    methods:{
+        addToFavorites(){
+            if(this.$store.state.logged){
+                let obj = {
+                    userId: this.$store.state.userId,
+                    auctionId: this.auctionId,
+                }
+
+                console.log('Przesłany obiekt', obj);
+
+                let url = 'http://localhost:8080/api/auctions/' + this.$store.state.userId + '/favorite';
+
+                //request
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(obj),
+                })
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    else 
+                        return response.json();
+                })
+                .then(response => {
+                    console.log('Sukces. Odebrane dane ', response);
+                    alert('Dodano aukcję do ulubionych!');
+                })
+                .catch((error) => {
+                    console.log('Błąd', error);
+                    alert("Coś poszło nie tak!");
+                })
+            }
+            else{
+                alert("Aby dodać aukcję do ulubionych musisz być zalogowany!");
+            }
+
+        },
+        pushToAuction(){
+            //   console.log("push to auction id: "+this.auctionId);
+            this.$router.push(`/oferta/${this.auctionId}`);
+        }
+    },
+    mounted(){
+        //   console.log(this.url);
+        let element = document.getElementsByClassName("card__photo")[this.i];
+        element.style.backgroundImage = `url(${this.url}`;
+    }
 }
 </script>
 
