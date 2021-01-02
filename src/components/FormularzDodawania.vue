@@ -9,13 +9,13 @@
 
         <h1>Dodaj ogłoszenie</h1>
         <form class="form__title">
-            <label  class="form__title__label" for="title">Tytuł<span style="color: red;">*</span></label>
-            <input v-model="title" class="form__title__input" name="title" type="text" placeholder="Tytuł">
+            <label class="form__title__label" for="title">Tytuł<span style="color: red;">*</span></label>
+            <input @change="isCorrectTitle = validateMin3Char(title)" v-model="title" class="form__title__input" name="title" type="text" placeholder="Tytuł">
         </form>
 
         <form class="form__state">
             <label class="register__state__label" for="state">Stan<span style="color: red;">*</span></label>
-            <select v-model="state" class="register__state__select" name="state">
+            <select @change="isCorrectState=true" v-model="state" class="register__state__select" name="state">
                 <option value="" disabled selected>Wybierz...</option>
                 <option value="Nowy">Nowy</option>
                 <option value="Używany">Używany</option>
@@ -24,7 +24,7 @@
 
         <form class="form__category">
             <label class="register__category__label" for="category">Kategoria<span style="color: red;">*</span></label>
-            <select v-model="category" class="register__category__select" name="category">
+            <select @change="isCorrectCategory=true" v-model="category" class="register__category__select" name="category">
                 <option value="" disabled selected>Wybierz...</option>
                 <option value="nieruchomości">Nieruchomości</option>
                 <option value="motoryzacja">Motoryzacja</option>
@@ -40,7 +40,7 @@
         </form>
 
         <form class="form__startingPrice">
-            <label  class="form__startingPrice__label" for="startingPrice">Cena początkowa<span style="color: red;">*</span></label>
+            <label class="form__startingPrice__label" for="startingPrice">Cena początkowa<span style="color: red;">*</span></label>
             <input v-model="startingPrice" class="form__startingPrice__input" min="0" name="startingPrice" type="number" placeholder="Cena początkowa">
         </form>
 
@@ -50,9 +50,9 @@
         </form>
 
         <form class="form__description">
-            <label  class="form__description__label" for="description">Opis przedmiotu<span style="color: red;">*</span></label>
+            <label  class="form__description__label" for="description" :data-after-content="remainingCharacters">Opis przedmiotu<span style="color: red;">*</span></label>
             <!-- <input v-model="description" class="form__description__input" name="description" type="textarea" placeholder="Tytuł"> -->
-            <textarea v-model="description" name="description" class="form__description__input" placeholder="Opis..."></textarea>
+            <textarea @change="isCorrectDescription = validateMin3Char(description)" @keyup="calcChar" v-model="description" name="description" class="form__description__input" placeholder="Opis..." maxlength="500"></textarea>
         </form>
 
         <form class="form__photos">
@@ -101,11 +101,23 @@ export default {
             photos: {},
             photosBlob: [], //not blob, base64
             photosLength: 0,
-            loading: false,
+            // loading: false,
+            remainingCharacters: "Pozostało znaków: 500/500",
+            isCorrectTitle: false,
+            isCorrectState: false,
+            isCorrectCategory: false,
+            isCorrectDescription: false,
+
         }
     },
     
     methods:{
+        //min 3 char
+        validateMin3Char: function (v) {
+            let re = /^.{3,}$/;
+            return re.test(v);
+        },
+
         displayPhotos(){
             this.photos = document.getElementById('photo').files;
             //too many photos
@@ -156,47 +168,66 @@ export default {
 
         addAuction(){
             if(this.$store.state.logged){
-                let obj = {
-                    title: this.title,
-                    state: this.state,
-                    category: this.category,
-                    startingPrice: this.startingPrice,
-                    instantPrice: this.instantPrice,
-                    description: this.description,
-                    photosBlob: this.photosBlob,
-                    photosLength: this.photosLength,
-                    userId: this.$store.state.userId,
+                if(this.isCorrectTitle && 
+                    this.isCorrectState && 
+                    this.isCorrectCategory && 
+                    this.isCorrectDescription && 
+                    (this.photosLength>0) && 
+                    (this.startingPrice<this.instantPrice)){
+
+                    let obj = {
+                        title: this.title,
+                        state: this.state,
+                        category: this.category,
+                        startingPrice: this.startingPrice,
+                        instantPrice: this.instantPrice,
+                        description: this.description,
+                        photosBlob: this.photosBlob,
+                        photosLength: this.photosLength,
+                        userId: this.$store.state.userId,
+                    }
+                    
+                    // this.loading = true;
+
+
+
+
+                    console.log('Przesłany obiekt:',obj);
+
+
+                    let url = 'http://localhost:8080/api/auctions/create';
+                    //request
+                    fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(obj)
+                    })
+                    .then(response => {
+                        if(!response.ok) {
+                            throw new Error(response.status);
+                        }
+                        else 
+                            return response.json();
+                    })
+                    .then(response => {
+                        // display response from server
+                        console.log('Sukces. Odebrane dane ', response);
+                        alert("Utworzono aukcję");
+                        this.$router.push("/");
+                    })
+                    .catch((error) => {
+                        console.log('Błąd', error);
+                        alert("Nie udało się dodać przedmiotu!");
+                    }) 
+                }
+                else{
+                    alert("Sprawdź raz jeszcze wprowadzone przez Ciebie wartości!");
                 }
 
-                this.loading = true;
-
-                console.log('Przesłany obiekt:',obj);
-
-                let url = 'http://localhost:8080/api/auctions/create';
-                //request
-                fetch(url, {
-                    method: 'POST',
-                    body: JSON.stringify(obj)
-                })
-                .then(response => {
-                    if(!response.ok) {
-                        throw new Error(response.status);
-                    }
-                    else 
-                        return response.json();
-                })
-                .then(response => {
-                    // display response from server
-                    console.log('Sukces. Odebrane dane ', response);
-                    alert("Utworzono aukcję");
-                    this.$router.push("/");
-                })
-                .catch((error) => {
-                    console.log('Błąd', error);
-                    alert("Nie udało się dodać przedmiotu!");
-                }) 
-
             }
+        },
+
+        calcChar(){
+            this.remainingCharacters = "Pozostało znaków: " + (500-this.description.length) + "/500";
         }
     },
     store: createStore,
@@ -281,6 +312,24 @@ export default {
             
             &:focus{
                 outline: 1px solid #007E33;
+            }
+        }
+    }
+
+    &__description{
+        label{
+            &::after{
+                content: attr(data-after-content);
+                position: absolute;
+                top: 2px;
+                right: 0;
+                font-size: 14px;
+                font-weight: 400;
+                color: rgb(93, 93, 93);
+
+                @media(max-width: 370px){
+                    content: '';
+                }
             }
         }
     }

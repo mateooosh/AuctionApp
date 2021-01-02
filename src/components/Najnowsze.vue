@@ -56,7 +56,6 @@ export default {
     getLatest(){
        
         let url = `http://localhost:8080/api/auctions/latest?page=${this.page}`;
-        console.log(url);
         //request
         fetch(url)
         .then(response => {

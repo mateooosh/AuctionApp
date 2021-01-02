@@ -26,6 +26,10 @@ export default {
       alert("Aby dodać aukcję, najpierw musisz się zalogować");
       this.$router.push("/logowanie");
     }
+    else{
+      document.title = "Dodaj Ogłoszenie - wdmj.pl";
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>

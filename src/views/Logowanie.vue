@@ -17,6 +17,17 @@ export default {
     Navbar,
     Zaloguj,
     Footer
+  },
+  mounted(){
+    
+
+    if(this.$store.state.logged){
+      this.$router.push("/");
+    }
+    else{
+      document.title = "Logowanie - wdmj.pl";
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>

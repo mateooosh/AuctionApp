@@ -31,7 +31,8 @@ export default {
     Footer
   },
   mounted(){
-    
+    document.title = "Oferta - wdmj.pl";
+    window.scrollTo(0,0);
   },
   methods:{
     

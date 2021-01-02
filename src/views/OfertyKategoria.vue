@@ -36,8 +36,7 @@ export default {
     }
   },
   mounted(){
-      // console.log(this.$route.params.kategoria);
-      
+    window.scrollTo(0,0);
   },
   methods:{
     getKategoria(v){

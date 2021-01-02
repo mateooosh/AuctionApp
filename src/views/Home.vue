@@ -24,6 +24,10 @@ export default {
     Categories,
     Najnowsze,
     Footer
+  },
+  mounted(){
+    document.title = "wdmj.pl";
+    window.scrollTo(0,0);
   }
 }
 </script>

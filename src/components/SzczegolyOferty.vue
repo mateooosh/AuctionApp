@@ -48,7 +48,7 @@
                 <div class="details__bid">
                     <h2>Licytacja</h2>
                     <div>Cena Aktualna</div>
-                    <div class="details__price">{{details.maxBidPrice}} zł</div>
+                    <div class="details__price" :class="{'animation':animate}">{{details.maxBidPrice}} zł</div>
                     <form class="details__form__actualPrice">
                         <label class="details__form__actualPrice__label" for="actualPrice"></label>
                         <input v-model="offer" class="details__form__actualPrice__input" :min="details.maxBidPrice+1" 
@@ -109,6 +109,7 @@ export default {
       mapIsVisible: false,
       auctionId: '',
       photosLength: 0,
+      animate: false,
 
       flickityOptions: {
         initialIndex: 0,
@@ -125,7 +126,8 @@ export default {
   },
 
   mounted(){
-        window.scrollTo(0,0);
+        // window.scrollTo(0,0);
+        
         this.auctionId = this.$route.params.auctionId;
 
         const url = `http://localhost:8080/api/auction/${this.auctionId}`;
@@ -133,6 +135,8 @@ export default {
         fetch(url)
         .then( response => response.json())
         .then( response =>{
+            document.title = response.auctiontitle + " - wdmj.pl";
+
             console.log(response);
 
             response.startDate = response.startDate.slice(0, 10);
@@ -234,7 +238,8 @@ export default {
                     }
 
                     console.log('Przesłany obiekt:',obj);
-
+                    
+                    //request
                     let url = `http://localhost:8080/api/auction/${this.details.auctionId}/bid`;
                     //request
                     fetch(url, {
@@ -251,11 +256,20 @@ export default {
                     .then(response => {
                         // display response from server
                         console.log('Sukces. Odebrane dane ', response);
-                        alert("Złożono ofertę!");
+                        this.details.maxBidPrice = this.offer;
+                        this.offer = this.details.maxBidPrice + 1;
+
+                        // alert("Złożono ofertę!");
+                        // animate price
+                        this.animate = true;
+                        setTimeout(() => {
+                            this.animate = false;
+                        }, 1000);
                     })
                     .catch((error) => {
                         console.log('Błąd', error);
                         alert("Nie udało się złożyć oferty!");
+                        
                     }) 
                 }
                 
@@ -329,6 +343,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.animation{
+    animation: animation 1s;
+}
+    
+
+@keyframes animation {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
 
 .carousel-cell {
   width: 700px;
@@ -443,10 +474,10 @@ export default {
      &__form__actualPrice{
         position: relative;
         label::after{
-            content: 'PLN';
+            content: 'zł';
             position: absolute;
             opacity: 0.5;
-            right: 30px;
+            right: 28px;
             top: 10px;
         }
     }

@@ -105,9 +105,15 @@ export default {
       console.log(this.query);
       console.log(this.kategoria);
 
+      
+
       if(this.kategoria !== undefined){
         this.category = this.kategoria;
         this.catIsVisible = false;
+        document.title = this.category[0].toUpperCase() + this.category.slice(1) + " - wdmj.pl";
+      }
+      else{
+        document.title = this.query + " - wdmj.pl";
       }
   },
   methods:{

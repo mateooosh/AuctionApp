@@ -17,6 +17,10 @@ export default {
     Navbar,
     Zarejestruj,
     Footer
+  },
+  mounted(){
+    document.title = "Rejestracja - wdmj.pl";
+    window.scrollTo(0,0);
   }
 }
 </script>

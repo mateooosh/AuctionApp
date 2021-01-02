@@ -15,6 +15,15 @@ export default {
   components: {
     Navbar,
     Footer
+  },
+  mounted(){
+    if(!this.$store.state.logged){
+      this.$router.push("/");
+    }
+    else{
+      document.title = "Wygrane Licytacje - wdmj.pl";
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>

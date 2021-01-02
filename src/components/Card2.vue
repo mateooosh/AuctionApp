@@ -46,6 +46,7 @@ export default {
 <style scoped lang="scss">
 .card{
     display: flex;
+    justify-content: space-between;
     width: 100%;
     height: 190px;
     margin-bottom:20px;

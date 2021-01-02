@@ -17,6 +17,15 @@ export default {
     Navbar,
     Settings,
     Footer
+  },
+  mounted(){
+    if(!this.$store.state.logged){
+      this.$router.push("/logowanie");
+    }
+    else{
+      document.title = "Ustawienia - wdmj.pl";
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>
