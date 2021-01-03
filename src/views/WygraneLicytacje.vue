@@ -1,19 +1,21 @@
 <template>
   <div class="konto">
     <Navbar/>
-    <h1>Wygrane Licytacje</h1>
+    <WonAuctions/>
     <Footer/>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import WonAuctions from '@/components/WonAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'WygraneLicytacje',
   components: {
     Navbar,
+    WonAuctions,
     Footer
   },
   mounted(){

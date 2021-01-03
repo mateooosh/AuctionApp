@@ -1,19 +1,21 @@
 <template>
   <div class="konto">
     <Navbar/>
-    <h1>Moje Przedmioty</h1>
+    <MyAuctions/>
     <Footer/>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import MyAuctions from '@/components/MyAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
   name: 'MojePrzedmioty',
   components: {
     Navbar,
+    MyAuctions,
     Footer
   },
   mounted(){

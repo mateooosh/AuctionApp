@@ -1,12 +1,11 @@
 <template>
-    <div class="newest">
-        <h1>Najnowsze ogłoszenia</h1>
-
+    <div class="won">
+        <h1>Twoje wygrane aukcje</h1>
+        <p class="won__p" v-if="auctions.length == 0">Brak wygranych aukcji</p>
         <!-- loading animation -->
         <div v-if="!gotData" class="lds-dual-ring"></div>
-        
 
-        <div v-if="gotData" class="newest__list" >
+        <div v-if="gotData" class="won__list" >
             
             <Card v-for="(auction, i) in auctions" :key="i" 
                 :auctionId="auction.auctionId"
@@ -22,8 +21,6 @@
                 :auctionState="auction.auctionState"
             />
         </div>
-
-        <button v-if="gotData && auctions.length%12==0" @click="getLatest()" class="newest__btn">Zobacz więcej</button>
     </div>
 </template>
 
@@ -32,33 +29,21 @@ import { createStore } from 'vuex';
 import Card from './Card.vue';
 
 export default {
-  name: 'Najnowsze',
-  store: createStore,
-  components:{
-      Card,
-  },
-  data(){
-      return{
-        gotData: false,
-        page: 1,
-        auctions: [],
-      }
-  },
-  mounted(){
-    this.getLatest();
-    
-    
-  },
-  methods:{
-    // get status of user
-    getLogged(){
-      return this.$store.state.logged;
+    name: 'MyAuctions',
+    store: createStore,
+    components:{
+        Card
+    },
+    data(){
+        return{
+            auctions: [],
+            gotData: false,
+        }
     },
 
-    getLatest(){
-       
-        let url = `http://localhost:8080/api/auctions/latest?page=${this.page}`;
+    mounted(){
         //request
+        let url = `http://localhost:8080/api/auctions/${this.$store.state.userId}/win`;
         fetch(url)
         .then(response => {
                 if(!response.ok) {
@@ -70,27 +55,25 @@ export default {
         .then(response => {
             // display response from server
             console.log('Sukces. Odebrane dane ', response);
-            this.auctions = this.auctions.concat(response);
-
+            this.auctions = response;
             this.gotData = true;
-            this.page++;
         })
         .catch(() => {
             console.log('Coś poszło nie tak z requestem:', url);
 
 
-            alert("Nie udało się pobrać najnowszych aukcji!");
-        }) 
-    }
-  }
+            alert("Nie udało się pobrać Twoich aukcji!");
+        })
+        
+    },
+        
 }
 </script>
 
 <style scoped lang="scss">
-.newest{
+.won{
     width: 1400px;
-    margin: auto;
-
+    margin: 100px auto;
 
     &__list{
         display: flex;
@@ -101,19 +84,29 @@ export default {
     h1{
         padding:0;
         margin: 0;
-        margin-bottom:20px;
+        margin-bottom:50px;
         text-align: center;
         font-weight: 400;
+    }
+
+    &__p{
+        padding: 0;
+        width: 500px;
+        margin: 230px auto 40px;
+        text-align: center;
+        font-size: 17px;
+        line-height: 1.5;
+        letter-spacing: 1px;
     }
 
     &__btn{
         background-color: #007E33;
         color: white;
-        margin: 10px auto 80px;
-        display: block;
         font-size: 14px;
         border-radius: 7px;
         padding: 10px 30px;
+        margin: auto;
+        display: block;
         outline: none;
         border: none;
         cursor: pointer;
@@ -124,26 +117,30 @@ export default {
         }
     }
 }
+
 @media(max-width: 1420px){
-    .newest{
+    .won{
         width: 1050px;
     }
 }
 
 @media(max-width: 1080px){
-    .newest{
+    .won{
         width: 700px;
     }
 }
 
 @media(max-width: 730px){
-    .newest{
+    .won{
         width: 350px;
+        &__p{
+            width: 100%;
+        }
     }
 }
 
 @media(max-width: 355px){
-    .newest{
+    .won{
         width: 100%;
     }
 }
@@ -176,6 +173,4 @@ export default {
         transform: rotate(360deg);
     }
 }
-
-
 </style>

@@ -54,7 +54,10 @@
                         <input v-model="offer" class="details__form__actualPrice__input" :min="details.maxBidPrice+1" 
                         :max="details.buyNowPrice-1" name="actualPrice" type="number" placeholder="Twoja oferta">
                     </form>
-                    <button @click="bid" class="details__btn">Licytuj</button>
+                    <button @click="bid" class="details__btn" :class="{'outdated': details.auctionState == 1}">
+                        <i v-if="bidLoading" class="fas fa-spinner fa-spin fa-lg"></i>
+                        <span v-if="!bidLoading">Licytuj</span>
+                    </button>
 
                 </div>
 
@@ -62,7 +65,10 @@
                     <h2>Kup Teraz</h2>
                     <div>Cena Kup Teraz</div>
                     <div class="details__price">{{details.buyNowPrice}} zł</div>
-                    <button @click="buyNow" class="details__btn">Kup Teraz</button>
+                    <button @click="buyNow" class="details__btn" :class="{'outdated': details.auctionState == 1}">
+                        <i v-if="buyNowLoading" class="fas fa-spinner fa-spin fa-lg"></i>
+                        <span v-if="!buyNowLoading">Kup Teraz</span>
+                    </button>
                 </div>
             </div>
 
@@ -110,6 +116,8 @@ export default {
       auctionId: '',
       photosLength: 0,
       animate: false,
+      bidLoading: false,
+      buyNowLoading: false,
 
       flickityOptions: {
         initialIndex: 0,
@@ -231,46 +239,56 @@ export default {
                     alert("Nie możesz licytować własnych aukcji!");
                 }
                 else{
-                    let obj = {
-                        userId: this.$store.state.userId,
-                        auctionId: this.details.auctionId,
-                        offer: this.offer
+                    
+                    
+                    if(this.offer >= this.details.buyNowPrice || this.offer <= this.details.maxBidPrice){
+                        alert("Wprowadzono błędną wartość!");
+                        this.offer = this.details.maxBidPrice;
                     }
 
-                    console.log('Przesłany obiekt:',obj);
-                    
-                    //request
-                    let url = `http://localhost:8080/api/auction/${this.details.auctionId}/bid`;
-                    //request
-                    fetch(url, {
-                        method: 'POST',
-                        body: JSON.stringify(obj)
-                    })
-                    .then(response => {
-                        if(!response.ok) {
-                            throw new Error(response.status);
+                    else{
+                        this.bidLoading = true;
+                        let obj = {
+                            userId: this.$store.state.userId,
+                            auctionId: this.details.auctionId,
+                            offer: this.offer
                         }
-                        else 
-                            return response.json();
-                    })
-                    .then(response => {
-                        // display response from server
-                        console.log('Sukces. Odebrane dane ', response);
-                        this.details.maxBidPrice = this.offer;
-                        this.offer = this.details.maxBidPrice + 1;
 
-                        // alert("Złożono ofertę!");
-                        // animate price
-                        this.animate = true;
-                        setTimeout(() => {
-                            this.animate = false;
-                        }, 1000);
-                    })
-                    .catch((error) => {
-                        console.log('Błąd', error);
-                        alert("Nie udało się złożyć oferty!");
-                        
-                    }) 
+                        console.log('Przesłany obiekt:',obj);
+
+                        //request
+                        let url = `http://localhost:8080/api/auction/${this.details.auctionId}/bid`;
+                        fetch(url, {
+                            method: 'POST',
+                            body: JSON.stringify(obj)
+                        })
+                        .then(response => {
+                            if(!response.ok) {
+                                throw new Error(response.status);
+                            }
+                            else 
+                                return response.json();
+                        })
+                        .then(response => {
+                            this.bidLoading = false;
+                            // display response from server
+                            console.log('Sukces. Odebrane dane ', response);
+                            this.details.maxBidPrice = this.offer;
+                            this.offer = parseInt(this.details.maxBidPrice) + parseInt(1);
+
+                            // alert("Złożono ofertę!");
+                            // animate price
+                            this.animate = true;
+                            setTimeout(() => {
+                                this.animate = false;
+                            }, 1000);
+                        })
+                        .catch((error) => {
+                            this.bidLoading = false;
+                            console.log('Błąd', error);
+                            alert("Nie udało się złożyć oferty!");
+                        }) 
+                    }
                 }
                 
             }
@@ -295,6 +313,7 @@ export default {
                     alert("Nie możesz kupować własnych przedmiotów!");
                 }
                 else{
+                    this.buyNowLoading = true;
                     let obj = {
                         userId: this.$store.state.userId,
                         auctionId: this.details.auctionId
@@ -316,11 +335,14 @@ export default {
                             return response.json();
                     })
                     .then(response => {
+                        this.buyNowLoading = false;
                         // display response from server
                         console.log('Sukces. Odebrane dane ', response);
                         alert("Przedmiot został kupiony!");
+                        this.details.auctionState = 1;
                     })
                     .catch((error) => {
+                        this.buyNowLoading = false;
                         console.log('Błąd', error);
                         alert("Nie udało się kupić przedmiotu!");
                     }) 
@@ -343,6 +365,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
+.outdated{
+    background-color: rgb(177, 177, 177) !important;
+    cursor: default !important;
+}
+
 .animation{
     animation: animation 1s;
 }

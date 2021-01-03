@@ -7,17 +7,23 @@
         <p class="card__location">{{location}} ({{province}})</p>
 
         <div style="display: flex; justify-content: space-between; align-items: center">
-            <div>
+            <div v-if="auctionState==2">
                 <p class="card__startingPrice">Licytuj</p>
                 <p class="card__price">{{actualPrice}} zł</p>
             </div>
             
-            <div>
+            <div v-if="auctionState==2">
                 <p class="card__instantPrice">Kup Teraz</p>
                 <p class="card__price">{{instantPrice}} zł</p>
             </div>
 
-            <i @click="addToFavorites" class="far fa-heart fa-lg"></i>
+            <div v-if="auctionState==1">
+                <p class="card__instantPrice">Cena końcowa</p>
+                <p class="card__price">{{actualPrice}} zł</p>
+            </div>
+
+            <i v-if="!favorite" @click="addToFavorites" class="far fa-heart fa-lg"></i>
+            <i v-if="favorite" class="fas fa-heart fa-lg"></i>
         </div>
     </div>
 </template>
@@ -36,6 +42,8 @@ export default {
         province: String,
         title: String,
         url: String,
+        favorite: Boolean,
+        auctionState: Number
     },
     methods:{
         addToFavorites(){
