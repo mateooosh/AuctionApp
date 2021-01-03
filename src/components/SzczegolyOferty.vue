@@ -225,7 +225,7 @@ export default {
     },
 
     bid(){
-        if(this.details.auctionState === 1){
+        if(this.details.auctionState === 2){
             if(this.$store.state.logged){
                 if(this.details.authorEmail === this.$store.state.userEmail){
                     alert("Nie możesz licytować własnych aukcji!");
@@ -289,7 +289,7 @@ export default {
         
     },
     buyNow(){
-        if(this.details.auctionState === 1){
+        if(this.details.auctionState === 2){
             if(this.$store.state.logged){
                 if(this.details.authorEmail === this.$store.state.userEmail){
                     alert("Nie możesz kupować własnych przedmiotów!");
@@ -337,8 +337,8 @@ export default {
         else{
             alert("Aukcja została zakończona!");
         }
-    }
-  },
+    } 
+  }, 
 }
 </script>
 
