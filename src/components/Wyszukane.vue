@@ -6,7 +6,7 @@
         <form class="results__province" v-on:submit.prevent>
             <label class="results__province__label" for="province">Województwo</label>
             <select @change="getAuctions" v-model="province" class="results__province__select" name="province">
-                <option value="" selected>Wybierz...</option>
+                <option value="">Wybierz...</option>
                 <option value="dolnośląskie">dolnośląskie</option>
                 <option value="kujawsko-pomorskie">kujawsko-pomorskie</option>
                 <option value="lubelskie">lubelskie</option>
@@ -28,8 +28,8 @@
 
         <form class="results__category" v-on:submit.prevent v-if="catIsVisible">
             <label class="results__category__label" for="category">Kategoria</label>
-            <select v-model="category" class="results__category__select" name="category">
-                <option value="" selected >Wybierz...</option>
+            <select @change="getAuctions" v-model="category" class="results__category__select" name="category">
+                <option value="" >Wybierz...</option>
                 <option value="nieruchomości">Nieruchomości</option>
                 <option value="motoryzacja">Motoryzacja</option>
                 <option value="rolnictwo">Rolnictwo</option>
@@ -46,17 +46,17 @@
         <form class="results__min" v-on:submit.prevent>
             <label class="results__min__label" for="min">Cena</label>
             <div>
-                <input v-model="min" class="results__min__input" name="min" type="number" placeholder="Od" min=0>
-                <input v-model="max" class="results__max__input" name="max" type="number" placeholder="Do" min=0>
+                <input @change="getAuctions" v-model="min" class="results__min__input" name="min" type="number" placeholder="Od" min=0>
+                <input @change="getAuctions" v-model="max" class="results__max__input" name="max" type="number" placeholder="Do" min=0>
             </div>
         </form>
 
         <form class="results__order" v-on:submit.prevent>
             <label class="results__order__label" for="order">Sortuj</label>
-            <select v-model="order" class="results__order__select" name="order">
-                <option value="Najnowsze" selected >Najnowsze</option>
-                <option value="Najtańsze">Najtańsze</option>
-                <option value="Najdroższe">Najdroższe</option>
+            <select @change="getAuctions" v-model="order" class="results__order__select" name="order">
+                <option value="latest" >Najnowsze</option>
+                <option value="asc">Najtańsze</option>
+                <option value="desc">Najdroższe</option>
             </select>
         </form>
     </div>
@@ -87,14 +87,16 @@ export default {
   },
   data(){
       return{
-          province: 'Wybierz...',
-          category: 'Wybierz...',
+          province: '',
+          category: '',
           min: '',
           max: '',
-          order: 'Najnowsze',
-          page: 1,
+          order: 'latest',
           cat: '',
           catIsVisible: true,
+          gotData: false,
+          page: 1,
+          auctions: [],
       }
   },
   props:{
@@ -119,14 +121,57 @@ export default {
   },
   methods:{
         getAuctions(){
+            // replace blank space with '-'
             const title = this.query.replace(/\s/g, '-').toLowerCase();
-            const url = `http://localhost:8080/api/auctions/${title}`;
-            console.log(url);
-            // if(this.province !== "Wybierz..."){
-            //     console.log(this.province);
-            // }
+            let url = `http://localhost:8080/api/auctions/${title}`;
+
+            //sort
+            url+=`?sort=${this.order}`;
+
+            //province
+            if(this.province !== '')
+                url+=`&province=${this.province}`;
+
+            //category
+            if(this.category !== '')
+                url+=`&category=${this.category}`;
             
-            // console.log("get auctions: ",url);
+
+            //min price
+            if(this.min != '' && this.min !=0)
+                url+=`&min=${this.min}`;
+            
+
+            //max price
+            if(this.max != '' && this.max !=0)
+                url+=`&max=${this.max}`;
+
+            //page
+            url+=`&page=${this.page}`;
+
+            console.log("Request na adres: ",url);
+
+            fetch(url)
+                .then(response => {
+                        if(!response.ok) {
+                            throw new Error(response.status);
+                        }
+                        else 
+                            return response.json();
+                })
+                .then(response => {
+                    // display response from server
+                    console.log('Sukces. Odebrane dane ', response);
+                    this.auctions = this.auctions.concat(response);
+
+                    this.gotData = true;
+                    this.page++;
+                })
+                .catch(() => {
+                    console.log('Coś poszło nie tak z requestem:', url);
+                    alert("Nie udało się pobrać aukcji!");
+                }) 
+            
         }
       
   },
