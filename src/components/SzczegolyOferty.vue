@@ -148,6 +148,14 @@ export default {
             console.log(response);
 
             response.startDate = response.startDate.slice(0, 10);
+            // let end = new Date(response.endDate);
+            // end = end.getTime() - new Date().getTime(); 
+            // //days
+            // console.log(end/60/60/24/1000);
+            // let days = end/60/60/24/1000;
+            // let hours = end/60/60/1000;
+            // console.log(days, hours);
+
             response.endDate = response.endDate.slice(0, 10);
             this.offer = response.maxBidPrice+1;
             this.details = response;

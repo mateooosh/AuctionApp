@@ -131,20 +131,30 @@ export default {
             //province
             if(this.province !== '')
                 url+=`&province=${this.province}`;
+            else{
+                url+=`&province=`;
+            }
 
             //category
             if(this.category !== '')
                 url+=`&category=${this.category}`;
-            
+            else{
+                url+=`&category=`;
+            }
 
             //min price
             if(this.min != '' && this.min !=0)
                 url+=`&min=${this.min}`;
-            
+            else{
+                url+=`&min=`;
+            }
 
             //max price
             if(this.max != '' && this.max !=0)
                 url+=`&max=${this.max}`;
+            else{
+                url+=`&max=`;
+            }
 
             //page
             url+=`&page=${this.page}`;
