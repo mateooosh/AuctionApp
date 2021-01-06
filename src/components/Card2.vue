@@ -1,20 +1,23 @@
 <template>
     <div class="card">
-        <div class="card__photo"></div>
+        <div @click="pushToAuction()" class="card__photo"></div>
         <div class="card__details">
-            <p class="card__title">Fiat Multipla Rodzinna Ropucha silnik nie stuka, nic nie puka </p>
-            <p class="card__location">Kielce (świętokrzyskie)</p>
+            <p @click="pushToAuction()" class="card__title">{{title}}</p>
+            <div>
+                <p class="card__category">{{category}}</p>
+                <p class="card__location">{{location}} ({{province}})</p>
+            </div>
         </div>
 
         <div class="card__prices">
             <div>
                 <p class="card__startingPrice">Cena aktualna</p>
-                <p class="card__price">9999 zł</p>
+                <p class="card__price">{{actualPrice}} zł</p>
             </div>
             
             <div>
                 <p class="card__instantPrice">Cena błyskawiczna</p>
-                <p class="card__price">19999 zł</p>
+                <p class="card__price">{{instantPrice}} zł</p>
             </div>
 
             <i @click="addToFavorites" class="far fa-heart fa-lg"></i>
@@ -27,18 +30,64 @@
 export default {
   name: 'Card',
   props:{
-      auctionId: Number,
-      title: String,
-      location: String,
-      province: String,
-      startingPrice: Number,
-      instantPrice: Number,
-      url: String,
+        actualPrice: Number,
+        auctionId: Number,
+        category: String,
+        i: Number,
+        instantPrice: Number,
+        location: String,
+        province: String,
+        title: String,
+        url: String,
   },
   methods:{
-      addToFavorites(){
-          alert("dodaj do ulubionych");
-      },
+        addToFavorites(){
+            if(this.$store.state.logged){
+                let obj = {
+                    userId: this.$store.state.userId,
+                    auctionId: this.auctionId,
+                }
+
+                console.log('Przesłany obiekt', obj);
+
+                let url = 'http://localhost:8080/api/auctions/' + this.$store.state.userId + '/favorite';
+
+                //request
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(obj),
+                })
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    else 
+                        return response.json();
+                })
+                .then(response => {
+                    this.fav = true;
+                    console.log('Sukces. Odebrane dane ', response);
+                    // alert('Dodano aukcję do ulubionych!');
+                })
+                .catch((error) => {
+                    console.log('Błąd', error);
+                    alert("Coś poszło nie tak!");
+                })
+            }
+            else{
+                alert("Aby dodać aukcję do ulubionych musisz być zalogowany!");
+            }
+        },
+        pushToAuction(){
+            //   console.log("push to auction id: "+this.auctionId);
+            this.$router.push(`/oferta/${this.auctionId}`);
+        }
+  },
+  mounted(){
+        //   console.log(this.url);
+        this.fav = this.favorite;
+        let element = document.getElementsByClassName("card__photo")[this.i];
+        element.style.backgroundImage = `url(${this.url}`;
   }
 }
 </script>
@@ -54,7 +103,7 @@ export default {
     box-shadow: 0 2px 9px 0 rgba(0,0,0,0.25);
     transition: all .3s;
     &:hover{
-        transform:scale(1.02, 1.02);
+        transform:scale(1.01, 1.01);
     }
 
     i{
@@ -64,13 +113,12 @@ export default {
     &__photo{
         width: 260px;
         min-width: 200px;
-        height: 160px;
-        background-image: url("../assets/multipla.jpg");
+        height: 162px;
         background-repeat: no-repeat;
         background-position:50% 50%;
-        background-size: 100%;
-        margin-bottom: 25px;
-        margin-right: 20px;
+        background-size: cover;
+        // margin-bottom: 25px;
+        // margin-right: 20px;
         cursor: pointer;
 
     }
@@ -79,6 +127,7 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        width: 450px;
     }
 
     &__title, &__location, &__startingPrice, &__instantPrice, &__price{
@@ -92,6 +141,10 @@ export default {
         // height: 40px;
         overflow: hidden;
         cursor: pointer;
+    }
+
+    &__category{
+        margin-bottom: 8px;
     }
 
     &__location{
@@ -148,6 +201,14 @@ export default {
         height: 350px;
         width: 322px;
         margin: 0 auto 30px;
+
+        &__details{
+            width: 100%;
+        }
+
+        &__category{
+            display: none;
+        }
 
         &__photo{
             height:  180px;

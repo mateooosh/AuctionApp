@@ -124,10 +124,9 @@ export default {
     &__photo{
         width: 100%;
         height: 180px;
-        background-image: url("../assets/multipla.jpg");
         background-repeat: no-repeat;
         background-position:50% 50%;
-        background-size: 100%;
+        background-size:cover;
         margin-bottom: 25px;
         cursor: pointer;
 

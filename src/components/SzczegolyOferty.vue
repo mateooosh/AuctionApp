@@ -49,6 +49,7 @@
                     <h2>Licytacja</h2>
                     <div>Cena Aktualna</div>
                     <div class="details__price" :class="{'animation':animate}">{{details.maxBidPrice}} zł</div>
+                    <div class="details__left">{{left}}</div>
                     <form class="details__form__actualPrice">
                         <label class="details__form__actualPrice__label" for="actualPrice"></label>
                         <input v-model="offer" class="details__form__actualPrice__input" :min="details.maxBidPrice+1" 
@@ -118,7 +119,12 @@ export default {
       animate: false,
       bidLoading: false,
       buyNowLoading: false,
-
+      days: 0,
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      interval: '',
+      left: 'Do końca zostało',
       flickityOptions: {
         initialIndex: 0,
         prevNextButtons: true,
@@ -131,6 +137,10 @@ export default {
   },
   props:{
 
+  },
+
+  unmounted(){
+      clearInterval(this.interval);
   },
 
   mounted(){
@@ -148,15 +158,49 @@ export default {
             console.log(response);
 
             response.startDate = response.startDate.slice(0, 10);
-            // let end = new Date(response.endDate);
-            // end = end.getTime() - new Date().getTime(); 
-            // //days
-            // console.log(end/60/60/24/1000);
-            // let days = end/60/60/24/1000;
-            // let hours = end/60/60/1000;
-            // console.log(days, hours);
-
             response.endDate = response.endDate.slice(0, 10);
+
+            let end = new Date(response.endDate);
+            end = end.getTime() - new Date().getTime(); 
+
+            this.days = Math.floor(end/60/60/24/1000);
+            end -= this.days*60*60*24*1000;
+            this.hours = Math.floor(end/60/60/1000);
+            end -= this.hours*60*60*1000;
+            this.minutes = Math.floor(end/60/1000);
+            end -= this.minutes*60*1000;
+            this.seconds = Math.floor(end/1000);
+
+            
+            //days
+            // console.log(end/60/60/24/1000);
+            
+            this.interval = setInterval(() => {
+                let end = new Date(response.endDate);
+                end = end.getTime() - new Date().getTime(); 
+
+                this.days = Math.floor(end/60/60/24/1000);
+                end -= this.days*60*60*24*1000;
+                this.hours = Math.floor(end/60/60/1000);
+                end -= this.hours*60*60*1000;
+                this.minutes = Math.floor(end/60/1000);
+                end -= this.minutes*60*1000;
+                this.seconds = Math.floor(end/1000);
+                
+                console.log(this.days, this.hours, this.minutes, this.seconds);
+                if(this.days>0){
+                    this.left = `Do końca zostało ${this.days} dni`;
+                }
+                else{
+                    this.left = `Do końca zostało: ${this.hours}:${this.minutes}:${this.seconds}`;
+                }
+                
+                console.log(this.left);
+
+            }, 1000);
+
+            
+            
             this.offer = response.maxBidPrice+1;
             this.details = response;
             this.photosLength = response.photos.length;
@@ -433,7 +477,7 @@ export default {
             font-weight: 400;
             font-size: 30px;
             width: 90%;
-            max-height: 75px;
+            // max-height: 75px;
             overflow: hidden;
         }
     }
@@ -488,6 +532,13 @@ export default {
         box-shadow: 0 2px 9px 0 rgba(0,0,0,0.25);
         width: 240px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        h2{
+            margin-bottom: 10px;
+            
+        }
     }
 
     &__price{
@@ -495,6 +546,12 @@ export default {
         font-size: 26px;
         color: #007E33;
         margin-top: 6px;
+    }
+
+    &__bid{
+        h2{
+            margin: 0 0 10px;
+        }
     }
 
 
@@ -524,7 +581,7 @@ export default {
             display: block;
             font-weight: 500;
             font-size: 16px;
-            margin-top: 20px;
+            margin-top: 10px;
             // margin-bottom:8px;
         }
 
@@ -541,6 +598,14 @@ export default {
                 outline: 1px solid #007E33;
             }
         }
+    }
+
+    &__left{
+        font-weight: 300;
+        font-size: 14px;
+        color: rgb(65, 65, 65);
+        margin-top: 10px;
+        // margin-bottom: 0;
     }
 
     &__title{
