@@ -3,7 +3,7 @@
     <Navbar/>
     <Search class="search"/>
     <!-- <h1>OFERTY</h1> -->
-    <Wyszukane :query="query"/>
+    <Wyszukane :query="query" :key="query"/>
     <!-- <Wyszukane v-if="query.length!=0" :query="query"/> -->
     <Footer/>
   </div>

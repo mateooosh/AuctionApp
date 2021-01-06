@@ -5,7 +5,7 @@
     <div class="results__filters">
         <form class="results__province" v-on:submit.prevent>
             <label class="results__province__label" for="province">Województwo</label>
-            <select v-model="province" class="results__province__select" name="province">
+            <select @change="getAuctions" v-model="province" class="results__province__select" name="province">
                 <option value="" selected>Wybierz...</option>
                 <option value="dolnośląskie">dolnośląskie</option>
                 <option value="kujawsko-pomorskie">kujawsko-pomorskie</option>
@@ -102,9 +102,10 @@ export default {
       kategoria: String,
   },
   mounted(){
-      console.log(this.query);
-      console.log(this.kategoria);
+      console.log("query:",this.query);
+      console.log("kategoria:",this.kategoria);
 
+      this.getAuctions();
       
 
       if(this.kategoria !== undefined){
@@ -117,7 +118,16 @@ export default {
       }
   },
   methods:{
-
+        getAuctions(){
+            const title = this.query.replace(/\s/g, '-').toLowerCase();
+            const url = `http://localhost:8080/api/auctions/${title}`;
+            console.log(url);
+            // if(this.province !== "Wybierz..."){
+            //     console.log(this.province);
+            // }
+            
+            // console.log("get auctions: ",url);
+        }
       
   },
   computed:{

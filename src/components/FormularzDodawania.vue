@@ -78,7 +78,8 @@
             </div>
         </div>
         <button @click="addAuction" class="form__button">
-            Dodaj ogłoszenie
+            <i v-if="loading" class="fas fa-spinner fa-spin fa-lg"></i>
+            <span v-if="!loading">Dodaj ogłoszenie</span>
         </button>
     </div>
 </template>
@@ -107,6 +108,7 @@ export default {
             isCorrectState: false,
             isCorrectCategory: false,
             isCorrectDescription: false,
+            loading:false
 
         }
     },
@@ -168,12 +170,12 @@ export default {
 
         addAuction(){
             if(this.$store.state.logged){
-                if(this.isCorrectTitle && 
-                    this.isCorrectState && 
-                    this.isCorrectCategory && 
-                    this.isCorrectDescription && 
-                    (this.photosLength>0) && 
-                    (this.startingPrice<this.instantPrice)){
+                // if(this.isCorrectTitle && 
+                //     this.isCorrectState && 
+                //     this.isCorrectCategory && 
+                //     this.isCorrectDescription && 
+                //     (this.photosLength>0) && 
+                //     (this.startingPrice<this.instantPrice)){
 
                     let obj = {
                         title: this.title,
@@ -187,7 +189,7 @@ export default {
                         userId: this.$store.state.userId,
                     }
                     
-                    // this.loading = true;
+                    this.loading = true;
 
 
 
@@ -209,19 +211,21 @@ export default {
                             return response.json();
                     })
                     .then(response => {
+                        this.loading = false;
                         // display response from server
                         console.log('Sukces. Odebrane dane ', response);
                         alert("Utworzono aukcję");
                         this.$router.push("/");
                     })
                     .catch((error) => {
+                        this.loading = false;
                         console.log('Błąd', error);
                         alert("Nie udało się dodać przedmiotu!");
                     }) 
-                }
-                else{
-                    alert("Sprawdź raz jeszcze wprowadzone przez Ciebie wartości!");
-                }
+                // }
+                // else{
+                //     alert("Sprawdź raz jeszcze wprowadzone przez Ciebie wartości!");
+                // }
 
             }
         },

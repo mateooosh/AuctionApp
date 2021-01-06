@@ -418,6 +418,9 @@ export default {
     width: 900px;
     margin: 100px auto;
     
+    h1{  
+        margin-bottom: 50px;
+    }
 
     &__option, &__title{
         border-top-left-radius: 4px;
@@ -425,7 +428,7 @@ export default {
     }
 
     &__option{
-        margin-bottom: 30px;
+        margin-bottom: 50px;
         box-shadow: 0px 2px 9px -3px rgba(0,0,0,0.75);
         
     }

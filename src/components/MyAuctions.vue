@@ -1,8 +1,8 @@
 <template>
     <div class="my">
         <h1>Twoje aktywne aukcje</h1>
-        <p class="my__p" v-if="auctions.length == 0">Brak aktywnych aukcji</p>
-        <router-link v-if="auctions.length == 0" to="/dodaj-ogloszenie">
+        <p class="my__p" v-if="auctions.length == 0 && gotData">Brak aktywnych aukcji</p>
+        <router-link v-if="auctions.length == 0 && gotData" to="/dodaj-ogloszenie">
           <button class="my__btn">
             Dodaj ogłoszenie 
           </button>

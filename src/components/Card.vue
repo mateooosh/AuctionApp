@@ -22,8 +22,8 @@
                 <p class="card__price">{{actualPrice}} zł</p>
             </div>
 
-            <i v-if="!favorite" @click="addToFavorites" class="far fa-heart fa-lg"></i>
-            <i v-if="favorite" class="fas fa-heart fa-lg"></i>
+            <i v-if="!fav" @click="addToFavorites" class="far fa-heart fa-lg"></i>
+            <i v-if="fav" class="fas fa-heart fa-lg"></i>
         </div>
     </div>
 </template>
@@ -32,6 +32,11 @@
 
 export default {
     name: 'Card',
+    data(){
+        return{
+            fav: false,
+        }
+    },
     props:{
         actualPrice: Number,
         auctionId: Number,
@@ -70,8 +75,9 @@ export default {
                         return response.json();
                 })
                 .then(response => {
+                    this.fav = true;
                     console.log('Sukces. Odebrane dane ', response);
-                    alert('Dodano aukcję do ulubionych!');
+                    // alert('Dodano aukcję do ulubionych!');
                 })
                 .catch((error) => {
                     console.log('Błąd', error);
@@ -90,6 +96,7 @@ export default {
     },
     mounted(){
         //   console.log(this.url);
+        this.fav = this.favorite;
         let element = document.getElementsByClassName("card__photo")[this.i];
         element.style.backgroundImage = `url(${this.url}`;
     }

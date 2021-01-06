@@ -54,7 +54,10 @@
             <input @keyup.enter="register" v-model="phone" @change="validatePhone" class="register__phone__input" name="phone" type="text" placeholder="Numer Telefonu">
         </form>
 
-        <button @click="register" class="register__btn">Zarejestruj się</button>
+        <button @click="register" class="register__btn">
+            <i v-if="loading" class="fas fa-spinner fa-spin fa-lg"></i>
+            <span v-if="!loading">Zarejestruj się</span>
+        </button>
 
         <p class="register__footer">Masz już konto na wdmj.pl? 
             <router-link to="/logowanie">
@@ -87,6 +90,7 @@ export default {
             isCorrectProvince: false,
             isCorrectPhone: true,
             didInputChanged: false,
+            loading: false,
       }
   },
   store: createStore,
@@ -104,7 +108,8 @@ export default {
             this.isCorrectPhone &&
             this.didInputChanged            
             ){
-
+            
+            this.loading = true;
             let obj = {
                 email: this.email,
                 password: this.password,
@@ -130,12 +135,14 @@ export default {
                     return response.json();
             })
             .then(response => {
+                this.loading = false;
                 console.log('Sukces. Odebrane dane ', response);
                 alert('Zarejestrowano. Teraz możesz się zalogować');
                 //przekieruj na strone logowania
                 this.$router.push("/logowanie");
             })
             .catch((error) => {
+                this.loading = false;
                 console.log('Błąd', error);
                 alert("Nie udało się zarejestrować!");
             })

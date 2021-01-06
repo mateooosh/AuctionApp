@@ -13,7 +13,10 @@
 
         <p class="login__reset">Nie pamiętam hasła</p>
 
-        <button @click="logIn" class="login__btn">Zaloguj się</button>
+        <button @click="logIn" class="login__btn">
+            <i v-if="loading" class="fas fa-spinner fa-spin fa-lg"></i>
+            <span v-if="!loading">Zaloguj się</span>
+        </button>
 
         <p class="login__register">Nie masz konta na wdmj.pl? 
             <router-link to="/rejestracja">
@@ -35,6 +38,7 @@ export default {
           isCorrectEmail: true,
           isCorrectPassword: true,
           didInputChanged: false,
+          loading: false,
       }
   },
   store: createStore,
@@ -45,6 +49,7 @@ export default {
     },
     logIn(){
         if(this.isCorrectEmail && this.isCorrectPassword && this.didInputChanged){
+            this.loading = true;
             let obj = {
                 email: this.email,
                 password: this.password
@@ -64,6 +69,7 @@ export default {
                     return response.json();
             })
             .then(response => {
+                this.loading = false;
                 //wyswietl zwrocone dane
                 console.log('Sukces. Odebrane dane ', response);
                 alert("Udało się zalogować!");
@@ -75,6 +81,7 @@ export default {
                 
             })
             .catch((error) => {
+                this.loading = false;
                 console.log('Błąd', error);
                 alert("Nie udało się zalogować!");
             })
