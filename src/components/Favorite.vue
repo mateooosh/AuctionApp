@@ -2,7 +2,7 @@
     <div class="favorite">
         <h1>Twoje obserwowane aukcje</h1>
         
-        <p class="favorite__p" v-if="auctions.length == 0">Brak obserwowanych aukcji. <br/> Dzięki obserwowanym wszystkie ważne ogłoszenia będziesz miał zawsze pod ręką.</p>
+        <p class="favorite__p" v-if="auctions.length == 0 && gotData">Brak obserwowanych aukcji. <br/> Dzięki obserwowanym wszystkie ważne ogłoszenia będziesz miał zawsze pod ręką.</p>
         <!-- loading animation -->
         <div v-if="!gotData" class="lds-dual-ring"></div>
 
@@ -17,7 +17,6 @@
                 :actualPrice="auction.maxBidPrice"
                 :instantPrice="auction.buyNowPrice"
                 :url="auction.photo"
-                :i="i"
                 :favorite=true
                 :auctionState="auction.auctionState"
             />

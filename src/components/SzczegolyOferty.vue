@@ -18,7 +18,7 @@
                 </div>
                 
                 <h2>Opis</h2>
-                <p>{{details.description}}</p>
+                <p style="line-height: 1.5">{{details.description}}</p>
                 <h2>Szczegóły</h2>
                 <div class="details__param">
                     <div class="details__item">
@@ -49,13 +49,14 @@
                     <h2>Licytacja</h2>
                     <div>Cena Aktualna</div>
                     <div class="details__price" :class="{'animation':animate}">{{details.maxBidPrice}} zł</div>
-                    <div class="details__left">{{left}}</div>
+                    <div v-if="details.auctionState===2" class="details__left">{{left}}</div>
+                    <div v-if="details.auctionState===1 || details.auctionState===3" class="details__left">Aukcja została zakończona</div>
                     <form class="details__form__actualPrice">
                         <label class="details__form__actualPrice__label" for="actualPrice"></label>
                         <input v-model="offer" class="details__form__actualPrice__input" :min="details.maxBidPrice+1" 
                         :max="details.buyNowPrice-1" name="actualPrice" type="number" placeholder="Twoja oferta">
                     </form>
-                    <button @click="bid" class="details__btn" :class="{'outdated': details.auctionState == 1}">
+                    <button @click="bid" class="details__btn" :class="{'outdated': details.auctionState == 1 || details.auctionState == 3}">
                         <i v-if="bidLoading" class="fas fa-spinner fa-spin fa-lg"></i>
                         <span v-if="!bidLoading">Licytuj</span>
                     </button>
@@ -66,7 +67,7 @@
                     <h2>Kup Teraz</h2>
                     <div>Cena Kup Teraz</div>
                     <div class="details__price">{{details.buyNowPrice}} zł</div>
-                    <button @click="buyNow" class="details__btn" :class="{'outdated': details.auctionState == 1}">
+                    <button @click="buyNow" class="details__btn" :class="{'outdated': details.auctionState == 1 || details.auctionState == 3}">
                         <i v-if="buyNowLoading" class="fas fa-spinner fa-spin fa-lg"></i>
                         <span v-if="!buyNowLoading">Kup Teraz</span>
                     </button>
@@ -187,7 +188,7 @@ export default {
                 end -= this.minutes*60*1000;
                 this.seconds = Math.floor(end/1000);
                 
-                console.log(this.days, this.hours, this.minutes, this.seconds);
+                // console.log(this.days, this.hours, this.minutes, this.seconds);
                 if(this.days>0){
                     this.left = `Do końca zostało ${this.days} dni`;
                 }
@@ -195,7 +196,7 @@ export default {
                     this.left = `Do końca zostało: ${this.hours}:${this.minutes}:${this.seconds}`;
                 }
                 
-                console.log(this.left);
+                // console.log(this.left);
 
             }, 1000);
 
@@ -222,7 +223,7 @@ export default {
         })
         .then( response => response.json())
         .then( response => {
-            console.log(response);
+            // console.log(response);
             this.coordinates ={
                 lat: response[0].lat,
                 lon: response[0].lon
@@ -391,7 +392,7 @@ export default {
                         // display response from server
                         console.log('Sukces. Odebrane dane ', response);
                         alert("Przedmiot został kupiony!");
-                        this.details.auctionState = 1;
+                        this.details.auctionState = 3;
                     })
                     .catch((error) => {
                         this.buyNowLoading = false;

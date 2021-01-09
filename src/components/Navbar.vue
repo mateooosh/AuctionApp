@@ -2,7 +2,6 @@
   <nav class="nav">
       <router-link to="/">
         <div class="nav__title">
-          <!-- <img src="../assets/icons/store.svg" alt="store" width="40"> -->
           <img src="../assets/hammers.png" height="50" alt="">
           <div>WDMJ.PL</div>
         </div>
@@ -250,6 +249,17 @@ export default {
 
   .ml-70{
     margin-left: 20px !important;
+  }
+}
+
+@media(max-width: 460px){
+  .nav{
+    &__title{
+      display: none;
+    }
+    &__account{
+      margin-left: 0 !important;
+    }
   }
 }
 

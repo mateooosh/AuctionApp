@@ -1,7 +1,7 @@
 <template>
     <div class="my">
         <h1>Twoje aktywne aukcje</h1>
-        <p class="my__p" v-if="auctions.length == 0 && gotData">Brak aktywnych aukcji</p>
+        <p class="my__p" v-if="auctions.length == 0 && gotData">Brak aukcji</p>
         <router-link v-if="auctions.length == 0 && gotData" to="/dodaj-ogloszenie">
           <button class="my__btn">
             Dodaj ogłoszenie 
@@ -11,8 +11,26 @@
         <div v-if="!gotData" class="lds-dual-ring"></div>
 
         <div v-if="gotData" class="my__list" >
-            
-            <Card v-for="(auction, i) in auctions" :key="i" 
+            <Card v-for="(auction, i) in active" :key="i"
+            :auctionId="auction.auctionId"
+            :title="auction.auctiontitle" 
+            :location="auction.location"
+            :category="auction.category" 
+            :province="auction.province" 
+            :actualPrice="auction.maxBidPrice"
+            :instantPrice="auction.buyNowPrice"
+            :url="auction.photo"
+            :i="i"
+            :favorite=false
+            :auctionState="auction.auctionState"
+            />  
+        </div>
+
+        <h1 style="margin-top:100px">Twoje sprzedane aukcje</h1>
+        <!-- loading animation -->
+        <div v-if="!gotData" class="lds-dual-ring"></div>
+        <div v-if="gotData" class="my__list" >
+            <Card v-for="(auction, i) in sold" :key="i"
                 :auctionId="auction.auctionId"
                 :title="auction.auctiontitle" 
                 :location="auction.location"
@@ -21,10 +39,27 @@
                 :actualPrice="auction.maxBidPrice"
                 :instantPrice="auction.buyNowPrice"
                 :url="auction.photo"
-                :i="i"
                 :favorite=false
                 :auctionState="auction.auctionState"
-            />
+            />  
+        </div>
+
+        <h1 style="margin-top:100px">Twoje zakończone aukcje</h1>
+        <!-- loading animation -->
+        <div v-if="!gotData" class="lds-dual-ring"></div>
+        <div v-if="gotData" class="my__list" >
+            <Card v-for="(auction, i) in old" :key="i"
+                :auctionId="auction.auctionId"
+                :title="auction.auctiontitle" 
+                :location="auction.location"
+                :category="auction.category" 
+                :province="auction.province" 
+                :actualPrice="auction.maxBidPrice"
+                :instantPrice="auction.buyNowPrice"
+                :url="auction.photo"
+                :favorite=false
+                :auctionState="auction.auctionState"
+            />  
         </div>
     </div>
 </template>
@@ -42,6 +77,9 @@ export default {
     data(){
         return{
             auctions: [],
+            active: [],
+            old: [],
+            sold: [],
             gotData: false,
         }
     },
@@ -51,16 +89,29 @@ export default {
         let url = `http://localhost:8080/api/auctions/${this.$store.state.userId}/own`;
         fetch(url)
         .then(response => {
-                if(!response.ok) {
-                    throw new Error(response.status);
-                }
-                else 
-                    return response.json();
+            if(!response.ok) {
+                throw new Error(response.status);
+            }
+            else 
+                return response.json();
         })
         .then(response => {
             // display response from server
-            console.log('Sukces. Odebrane dane ', response);
+            console.log('Sukces. Moje aukcje ', response);
             this.auctions = response;
+            for(let i=0; i<response.length; i++){
+                if(response[i].auctionState == 1){
+                    this.old = this.old.concat(response[i]);
+                }
+                else if(response[i].auctionState == 2){
+                    this.active = this.active.concat(response[i]);
+                }
+                else if(response[i].auctionState == 3){
+                    this.sold = this.sold.concat(response[i]);
+                }
+                
+            }
+            console.log(this.sold);
             this.gotData = true;
         })
         .catch(() => {

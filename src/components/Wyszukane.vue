@@ -61,17 +61,7 @@
         </form>
     </div>
     <h1 style="margin-bottom: 40px;">Wyniki wyszukiwania <span v-if="query!=null">dla "{{query}}"</span> <span v-if="kategoria!=null">dla kategorii "{{kategoria}}"</span></h1>
-    <!-- <h1 v-if="kategoria!=null">{{kategoria}}</h1> -->
-    <!-- <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/>
-    <Card2/> -->
+   
     <div v-if="gotData" class="details__list" >
             
             <Card2 v-for="(auction, i) in auctions" :key="i" 
@@ -83,7 +73,6 @@
                 :actualPrice="auction.maxBidPrice"
                 :instantPrice="auction.buyNowPrice"
                 :url="auction.photo"
-                :i="i"
             />
         </div>
 
@@ -121,15 +110,14 @@ export default {
       console.log("query:",this.query);
       console.log("kategoria:",this.kategoria);
 
-      this.getAuctions();
-      
-
       if(this.kategoria !== undefined){
         this.category = this.kategoria;
         this.catIsVisible = false;
         document.title = this.category[0].toUpperCase() + this.category.slice(1) + " - wdmj.pl";
+        this.getAuctions();
       }
       else{
+        this.getAuctions();
         document.title = this.query + " - wdmj.pl";
       }
   },
@@ -143,9 +131,14 @@ export default {
         },
         getAuctions(){
             // replace blank space with '-'
-            const title = this.query.replace(/\s/g, '-').toLowerCase();
-            let url = `http://localhost:8080/api/auctions/${title}`;
-
+            let url;
+            if(this.kategoria !== undefined){
+                url = `http://localhost:8080/api/auctions`;
+            }
+            else{
+                const title = this.query.replace(/\s/g, '-').toLowerCase();
+                url = `http://localhost:8080/api/auctions/${title}`;
+            }
             //sort
             url+=`?sort=${this.order}`;
 

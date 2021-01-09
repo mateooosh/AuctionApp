@@ -16,7 +16,6 @@
                 :actualPrice="auction.maxBidPrice"
                 :instantPrice="auction.buyNowPrice"
                 :url="auction.photo"
-                :i="i"
                 :favorite=false
                 :auctionState="auction.auctionState"
             />

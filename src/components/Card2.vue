@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div @click="pushToAuction()" class="card__photo"></div>
+        <div @click="pushToAuction()" v-bind:id="auctionId" class="card__photo"></div>
         <div class="card__details">
             <p @click="pushToAuction()" class="card__title">{{title}}</p>
             <div>
@@ -33,7 +33,6 @@ export default {
         actualPrice: Number,
         auctionId: Number,
         category: String,
-        i: Number,
         instantPrice: Number,
         location: String,
         province: String,
@@ -86,7 +85,7 @@ export default {
   mounted(){
         //   console.log(this.url);
         this.fav = this.favorite;
-        let element = document.getElementsByClassName("card__photo")[this.i];
+        let element = document.getElementById(this.auctionId);
         element.style.backgroundImage = `url(${this.url}`;
   }
 }

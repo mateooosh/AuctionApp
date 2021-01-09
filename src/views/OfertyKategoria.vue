@@ -4,7 +4,7 @@
     <Search class="search"/>
     <!-- <h1>OFERTY</h1> -->
     <!-- {{kategoria}} -->
-    <Wyszukane :kategoria="kategoria"/>
+    <Wyszukane :kategoria="kategoria" :key="$route.params.kategoria"/>
     <!-- <Wyszukane v-if="query.length!=0" :query="query"/> -->
     <Footer/>
   </div>

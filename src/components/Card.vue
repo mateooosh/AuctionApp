@@ -1,12 +1,21 @@
 <template>
     <div class="card__frame">
-        <div @click="pushToAuction()" class="card__photo"></div>
-        <!-- <p class="card__title">Fiat Multipla Rodzinna Ropucha silnik nie stuka, nic nie puka </p> -->
+        <div @click="pushToAuction()" v-bind:id="auctionId" class="card__photo"></div>
         <p @click="pushToAuction()" class="card__title">{{title}} </p>
         <p class="card__category">{{category}}</p>
         <p class="card__location">{{location}} ({{province}})</p>
 
         <div style="display: flex; justify-content: space-between; align-items: center">
+            <div v-if="auctionState==1">
+                <p class="card__startingPrice">Cena wywoławcza</p>
+                <p class="card__price">{{actualPrice}} zł</p>
+            </div>
+            
+            <div v-if="auctionState==1">
+                <p class="card__instantPrice">Cena błyskawiczna</p>
+                <p class="card__price">{{instantPrice}} zł</p>
+            </div>
+
             <div v-if="auctionState==2">
                 <p class="card__startingPrice">Licytuj</p>
                 <p class="card__price">{{actualPrice}} zł</p>
@@ -17,13 +26,13 @@
                 <p class="card__price">{{instantPrice}} zł</p>
             </div>
 
-            <div v-if="auctionState==1">
+            <div v-if="auctionState==3">
                 <p class="card__instantPrice">Cena końcowa</p>
                 <p class="card__price">{{actualPrice}} zł</p>
             </div>
 
-            <i v-if="!fav" @click="addToFavorites" class="far fa-heart fa-lg"></i>
-            <i v-if="fav" class="fas fa-heart fa-lg"></i>
+            <i v-if="!fav && auctionState==2" @click="addToFavorites" class="far fa-heart fa-lg"></i>
+            <i v-if="fav && auctionState==2" class="fas fa-heart fa-lg"></i>
         </div>
     </div>
 </template>
@@ -97,7 +106,7 @@ export default {
     mounted(){
         //   console.log(this.url);
         this.fav = this.favorite;
-        let element = document.getElementsByClassName("card__photo")[this.i];
+        let element = document.getElementById(this.auctionId);
         element.style.backgroundImage = `url(${this.url}`;
     }
 }
@@ -107,7 +116,7 @@ export default {
 .card{
     &__frame{
         width: 322px;
-        height: 360px;
+        height: 365px;
         margin-bottom:30px;
         padding: 14px;
         box-shadow: 0 2px 9px 0 rgba(0,0,0,0.25);
@@ -151,7 +160,7 @@ export default {
     }
 
     &__location{
-        margin: 10px 0 5px;
+        margin: 10px 0 10px;
         color: rgb(105, 105, 105); 
         font-size: 12px;
         font-weight: 400;
