@@ -125,6 +125,7 @@ export default {
       minutes: 0,
       seconds: 0,
       interval: '',
+      getPriceInterval: '',
       left: 'Do końca zostało',
       flickityOptions: {
         initialIndex: 0,
@@ -142,6 +143,7 @@ export default {
 
   unmounted(){
       clearInterval(this.interval);
+      clearInterval(this.getPriceInterval);
   },
 
   mounted(){
@@ -201,6 +203,8 @@ export default {
             }, 1000);
 
             
+
+            
             
             this.offer = response.maxBidPrice+1;
             this.details = response;
@@ -219,6 +223,26 @@ export default {
             //get coordinates by location
             let location = response.location;
             this.mapIsVisible = true;
+
+            this.getPriceInterval = setInterval(() => {
+                fetch(`http://localhost:8080/api/auction/current/price/${this.auctionId}`)
+                    .then((response) => response.json())
+                    .then((response) => {
+                        
+                        console.log(response);
+                        
+                        if(response.price != this.details.maxBidPrice){
+                            
+                            this.details.maxBidPrice = response.price;
+                            // animate price
+                            this.animate = true;
+                            setTimeout(() => {
+                                this.animate = false;
+                            }, 1000);
+                        }
+                    })
+            }, 2000);
+
             return fetch(`https://nominatim.openstreetmap.org/search?q=${location}&format=json`);
         })
         .then( response => response.json())
@@ -687,6 +711,7 @@ export default {
         &__auction{
             width: 100%;
             display: flex;
+            flex-direction: row;
             justify-content: space-around;
             margin-top: 30px;
         }

@@ -1,6 +1,6 @@
 <template>
     <div class="form">
-        <input @keyup.enter="search" v-model="query" class="form__input" type="text" placeholder="Czego szukasz?">
+        <input @keyup.enter="search" v-model="query" class="form__input" type="text" :placeholder="placeholder">
         <button @click="search" class="form__btn">Szukaj</button>
     </div>
 </template>
@@ -13,7 +13,20 @@ export default {
   data(){
       return{
           query: '',
+          interval: '',
+          string: 'Czego szukasz?',
+          placeholder: '',
+          i: 0,
       }
+  },
+  mounted(){
+        this.interval = setInterval(() => {
+            if(this.i >=this.string.length)
+                this.i = 0;
+            this.i++;
+            this.placeholder = this.string.slice(0,this.i);
+            
+        }, 120);
   },
   methods:{
     getLogged(){

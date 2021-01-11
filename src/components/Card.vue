@@ -30,10 +30,27 @@
                 <p class="card__instantPrice">Cena końcowa</p>
                 <p class="card__price">{{actualPrice}} zł</p>
             </div>
+            <div style="text-align:right;" v-if="auctionState==3">
+                <p class="card__instantPrice">Sprzedający</p>
+                <p class="card__price">{{firstname}}</p>
+            </div>
 
             <i v-if="!fav && auctionState==2" @click="addToFavorites" class="far fa-heart fa-lg"></i>
             <i v-if="fav && auctionState==2" class="fas fa-heart fa-lg"></i>
         </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px">
+            <div v-if="auctionState==3">
+                <p class="card__startingPrice">Telefon</p>
+                <p class="card__price">{{phone}}</p>
+            </div>
+            
+            <div style="text-align:right;" v-if="auctionState==3">
+                <p class="card__instantPrice">E-mail</p>
+                <p class="card__price">{{email}}</p>
+            </div>
+        </div>
+        
     </div>
 </template>
 
@@ -51,13 +68,16 @@ export default {
         auctionId: Number,
         category: String,
         i: Number,
+        firstname: String,
         instantPrice: Number,
         location: String,
         province: String,
         title: String,
         url: String,
         favorite: Boolean,
-        auctionState: Number
+        auctionState: Number,
+        phone: String,
+        email: String
     },
     methods:{
         addToFavorites(){
@@ -116,7 +136,7 @@ export default {
 .card{
     &__frame{
         width: 322px;
-        height: 365px;
+        // height: 365px;
         margin-bottom:30px;
         padding: 14px;
         box-shadow: 0 2px 9px 0 rgba(0,0,0,0.25);

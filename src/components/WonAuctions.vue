@@ -18,6 +18,9 @@
                 :url="auction.photo"
                 :favorite=false
                 :auctionState="auction.auctionState"
+                :firstname="auction.firstname"
+                :phone="auction.phoneNumber"
+                :email="auction.email"
             />
         </div>
     </div>

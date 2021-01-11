@@ -61,6 +61,16 @@ const routes = [
     path: '/kategoria/:kategoria',
     name: 'OfertyKategoria',
     component: () => import('../views/OfertyKategoria.vue')
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: () => import('../views/Admin.vue')
+  },
+  {
+    path: '/admin/aukcje',
+    name: 'Aukcje',
+    component: () => import('../views/AdminAukcje.vue')
   }
 ]
 
