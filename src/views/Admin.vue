@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-      <DashboardNav active="klienci"/>
+      <DashboardNav style="flex: 350px;" active="klienci"/>
       <KlienciAdmin/>
     <Footer/>
   </div>

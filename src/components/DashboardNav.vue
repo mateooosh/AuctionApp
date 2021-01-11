@@ -31,7 +31,7 @@ export default {
     background-color: #00a141;
 }
 .menu{
-    width:300px;
+    width:100%;
     // background-color:rgb(39, 39, 39);
     height: 100vh;
     background-image:linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('../assets/pricing.jpg');
