@@ -41,21 +41,21 @@
           </div>
           
           <div class="nav__account__menu" v-if="myAccountIsVisible" >
-            <router-link to="/moje-przedmioty">
+            <router-link v-if="role=='ROLE_ADMIN'" to="/admin">
               <div class="nav__account__menu__item">
-                Moje przedmioty
+                <i class="fas fa-tools"></i>Panel Administratora
               </div>
             </router-link>
 
-            <router-link to="/moje-licytacje">
+            <router-link to="/moje-przedmioty">
               <div class="nav__account__menu__item">
-                Moje licytacje
+                <i class="fas fa-coins"></i>Moje przedmioty
               </div>
             </router-link>
 
             <router-link to="/wygrane-licytacje">
               <div class="nav__account__menu__item">
-                Wygrane licytacje
+                <i class="fas fa-gavel"></i>Wygrane licytacje
               </div>
             </router-link>
 
@@ -94,7 +94,8 @@ export default {
   data(){
     return{
       myAccountIsVisible: false,
-      userEmail: ''
+      userEmail: '',
+      role: '',
     }
   },
 
@@ -102,6 +103,7 @@ export default {
 
   mounted(){
     this.userEmail = this.getEmail();
+    this.role = this.$store.state.role;
     // console.log("Mounted navbar")
   },
 
@@ -124,8 +126,9 @@ export default {
       this.$store.commit('logged', false);
       this.$store.commit('userId', '');
       this.$store.commit('userEmail', '');
+      this.$store.commit('role', '');
       alert("Wylogowano!")
-      this.$router.push("/");
+      this.$router.go();
     }
   },
 }

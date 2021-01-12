@@ -21,6 +21,7 @@
                 :firstname="auction.firstname"
                 :phone="auction.phoneNumber"
                 :email="auction.email"
+                own="false"
             />
         </div>
     </div>

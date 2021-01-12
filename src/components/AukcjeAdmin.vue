@@ -73,24 +73,32 @@ export default {
         }
     },
     mounted(){
-        const url = `http://localhost:8080/api/admin/auctions`;
-        fetch(url)
-            .then(response => response.json())
-            .then(response => {
-                console.log(response);
-                for(let i=0; i<response.length; i++){
-                    response[i].startDate = response[i].startDate.substr(0,10);
-                    response[i].endDate = response[i].endDate.substr(0,10);
-                }
-                this.auctions = response;
-            })
-            .catch(error => console.error("Coś poszło nie tak", error))
+        if(this.$store.state.role === "ROLE_ADMIN")
+            this.getAuctions();
+        else
+            this.$router.push('/');
+        
 
     },
     watch:{
         
     },
     methods:{
+        getAuctions(){
+            const url = `http://localhost:8080/api/admin/auctions`;
+            fetch(url)
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response);
+                    for(let i=0; i<response.length; i++){
+                        response[i].startDate = response[i].startDate.substr(0,10);
+                        response[i].endDate = response[i].endDate.substr(0,10);
+                    }
+                    this.auctions = response;
+                })
+                .catch(error => console.error("Coś poszło nie tak", error))
+        },
+
         showModal(id, status){
             if(status === "w trakcie"){     
                 this.modalTitle = 'Zakończenie aukcji';
@@ -132,7 +140,7 @@ export default {
                         console.log('Sukces. Odebrane dane ', response);
                         this.modalIsVisible = false;
                         alert("Aukcja została zakończona");
-                        
+                        this.getAuctions();
                     })
                     .catch((error) => {
                         console.log('Błąd', error);
@@ -161,7 +169,7 @@ export default {
                         console.log('Sukces. Odebrane dane ', response);
                         alert("Aukcja została wznowiona");
                         this.modalIsVisible = false;
-                        
+                        this.getAuctions();
                     })
                     .catch((error) => {
                         console.log('Błąd', error);

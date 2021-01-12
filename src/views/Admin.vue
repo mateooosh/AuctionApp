@@ -21,6 +21,14 @@ export default {
     KlienciAdmin
   },
   mounted(){
+    if(this.$store.state.role !== "ROLE_ADMIN"){
+      alert("Aby korzystać z panelu admina, najpierw musisz nim być");
+      this.$router.push("/");
+    }
+    else{
+      document.title = "Panel Administratora - wdmj.pl";
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>

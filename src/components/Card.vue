@@ -30,7 +30,7 @@
                 <p class="card__instantPrice">Cena końcowa</p>
                 <p class="card__price">{{actualPrice}} zł</p>
             </div>
-            <div style="text-align:right;" v-if="auctionState==3">
+            <div style="text-align:right;" v-if="auctionState==3 && own=='false'">
                 <p class="card__instantPrice">Sprzedający</p>
                 <p class="card__price">{{firstname}}</p>
             </div>
@@ -40,12 +40,12 @@
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px">
-            <div v-if="auctionState==3">
+            <div v-if="auctionState==3 && own=='false'">
                 <p class="card__startingPrice">Telefon</p>
                 <p class="card__price">{{phone}}</p>
             </div>
             
-            <div style="text-align:right;" v-if="auctionState==3">
+            <div style="text-align:right;" v-if="auctionState==3 && own=='false'">
                 <p class="card__instantPrice">E-mail</p>
                 <p class="card__price">{{email}}</p>
             </div>
@@ -77,7 +77,8 @@ export default {
         favorite: Boolean,
         auctionState: Number,
         phone: String,
-        email: String
+        email: String,
+        own: String
     },
     methods:{
         addToFavorites(){

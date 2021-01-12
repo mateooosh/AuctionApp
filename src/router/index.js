@@ -18,11 +18,6 @@ const routes = [
     component: () => import('../views/MojePrzedmioty.vue')
   },
   {
-    path: '/moje-licytacje',
-    name: 'MojeLicytacje',
-    component: () => import('../views/MojeLicytacje.vue')
-  },
-  {
     path: '/wygrane-licytacje',
     name: 'WygraneLicytacje',
     component: () => import('../views/WygraneLicytacje.vue')

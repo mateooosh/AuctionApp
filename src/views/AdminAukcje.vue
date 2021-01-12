@@ -19,14 +19,10 @@ export default {
     AukcjeAdmin
   },
   mounted(){
-    // if(!this.$store.state.logged){
-    //   alert("Nie masz takich uprawnień!");
-    //   this.$router.push("/logowanie");
-    // }
-    // else{
-    //   document.title = "Panel Administratora - wdmj.pl";
-    //   window.scrollTo(0,0);
-    // }
+      if(this.$store.state.role !== "ROLE_ADMIN"){
+        alert("Aby korzystać z panelu admina, najpierw musisz nim być");
+        this.$router.push('/');
+      }
   }
 }
 </script>

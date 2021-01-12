@@ -19,6 +19,7 @@
                 :url="auction.photo"
                 :favorite=false
                 :auctionState="auction.auctionState"
+                own="false"
             />
         </div>
 

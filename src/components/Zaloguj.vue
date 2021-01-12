@@ -72,12 +72,22 @@ export default {
                 this.loading = false;
                 //wyswietl zwrocone dane
                 console.log('Sukces. Odebrane dane ', response);
-                alert("Udało się zalogować!");
-                //przekieruj na strone startową
+                
                 this.$store.commit('logged', true);
                 this.$store.commit('userId', response.userId);
                 this.$store.commit('userEmail', response.email);
+                this.$store.commit('role', response.roles[0]);
+
+                if(response.roles[0] === "ROLE_USER"){
+                    alert("Udało się zalogować!");
+                    
+                }
+                else if(response.roles[0] === "ROLE_ADMIN"){
+                    alert("Udało się zalogować jako admin!");
+                    // this.$router.push("/admin");
+                }
                 this.$router.push("/");
+                
                 
             })
             .catch((error) => {

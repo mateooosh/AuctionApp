@@ -5,6 +5,7 @@ export default createStore({
         logged: false,
         userId: '',
         userEmail: '',
+        role: '',
     },
     mutations: {
         logged(state, item){
@@ -15,6 +16,9 @@ export default createStore({
         },
         userEmail(state, item){
             state.userEmail = item;
+        },
+        role(state, item){
+            state.role = item;
         }
     },
     actions: {
