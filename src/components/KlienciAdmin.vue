@@ -348,7 +348,7 @@ export default {
 	border-radius: 4px;
 
     &__background{
-        position: absolute;
+        position: fixed;
         background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
         width: 100%;
         left: 0;

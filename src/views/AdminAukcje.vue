@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard">
       <DashboardNav style="flex: 350px;" active="aukcje"/>
-      <KlienciAdmin/>
+      <AukcjeAdmin/>
   </div>
 </template>
 
@@ -9,14 +9,14 @@
 import { createStore } from 'vuex'
 
 import DashboardNav from '@/components/DashboardNav.vue'
-import KlienciAdmin from '@/components/KlienciAdmin.vue'
+import AukcjeAdmin from '@/components/AukcjeAdmin.vue'
 
 export default {
   name: 'AdminAukcje',
   store: createStore,
   components: {
     DashboardNav,
-    KlienciAdmin
+    AukcjeAdmin
   },
   mounted(){
     // if(!this.$store.state.logged){

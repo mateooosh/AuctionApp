@@ -31,6 +31,9 @@ export default {
     background-color: #00a141;
 }
 .menu{
+    position: sticky;
+    top:0;
+
     width:100%;
     // background-color:rgb(39, 39, 39);
     height: 100vh;
