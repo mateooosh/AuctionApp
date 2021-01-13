@@ -11,7 +11,6 @@
             <input @keyup.enter="logIn" @change="validatePassword" v-model="password" class="login__password__input" name="password" type="password" placeholder="Hasło" autocomplete="on">
         </form>
 
-        <p class="login__reset">Nie pamiętam hasła</p>
 
         <button @click="logIn" class="login__btn">
             <i v-if="loading" class="fas fa-spinner fa-spin fa-lg"></i>
@@ -196,17 +195,6 @@ export default {
         }
     }
 
-    &__reset{
-        color:#454545;
-        margin-top:30px;
-        font-size: 12px;
-        font-weight: 500;
-        cursor: pointer;
-        &:hover{
-            color: black;
-        }
-    }
-
     &__btn{
         width:100%;
         background-color: #007E33;
@@ -214,7 +202,7 @@ export default {
         font-size: 14px;
         border-radius: 7px;
         padding: 10px 30px;
-        margin-top: 30px;
+        margin-top: 50px;
         outline: none;
         border: none;
         cursor: pointer;

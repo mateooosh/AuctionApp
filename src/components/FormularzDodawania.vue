@@ -169,7 +169,7 @@ export default {
         },
 
         addAuction(){
-            if(this.$store.state.logged){
+            if(this.$store.state.logged && this.photosBlob.length > 0){
                 // if(this.isCorrectTitle && 
                 //     this.isCorrectState && 
                 //     this.isCorrectCategory && 
