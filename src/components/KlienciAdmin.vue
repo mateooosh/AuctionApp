@@ -43,7 +43,7 @@
 				<section class="edit__body">
                     <form v-on:submit.prevent class="edit__email">
                         <label :class="{'wrong-email': !isCorrectEmail}"  class="edit__email__label" for="email">E-mail<span style="color: red;">*</span></label>
-                        <input v-model="email" @change="isCorrectEmail = validateMin3Char(email)" class="edit__email__input" name="email" type="text" placeholder="E-mail">
+                        <input v-model="email" @change="isCorrectEmail = validateEmail(email)" class="edit__email__input" name="email" type="text" placeholder="E-mail">
                     </form>
 
                     <form v-on:submit.prevent class="edit__firstname">
@@ -86,7 +86,7 @@
 
                     <form v-on:submit.prevent class="edit__phone">
                         <label :class="{'wrong-phone': !isCorrectPhone}" class="edit__phone__label" for="phone">Numer telefonu<span style="color: red;">*</span></label>
-                        <input v-model="phone" @change="validatePhone" class="edit__phone__input" name="phone" type="text" placeholder="Numer Telefonu">
+                        <input v-model="phone" @change="isCorrectPhone = validatePhone(phone)" class="edit__phone__input" name="phone" type="text" placeholder="Numer Telefonu">
                     </form>
 
 				</section>
@@ -222,43 +222,55 @@ export default {
         },
 
         editUser(){
-            console.log(this.userIdToEdit)
-            let url = `http://localhost:8080/api/admin/users/${this.userIdToEdit}/personal/change`;
-            let obj = {
-                userId: this.userIdToEdit,
-                email: this.email,
-                firstname: this.firstname,
-                lastname: this.lastname,
-                location: this.location,
-                province: this.province,
-                phone: this.phone
-            }
-
-            console.log('Przesłany obiekt', obj);
-
-            //request
-            fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(obj),
-            })
-            .then(response => {
-                if(!response.ok) {
-                    throw new Error(response.status);
+            if( this.isCorrectEmail && 
+                this.isCorrectFirstname &&
+                this.isCorrectLastname &&
+                this.isCorrectLocation &&
+                this.isCorrectProvince &&
+                this.isCorrectPhone
+            ){
+                console.log(this.userIdToEdit)
+                let url = `http://localhost:8080/api/admin/users/${this.userIdToEdit}/personal/change`;
+                let obj = {
+                    userId: this.userIdToEdit,
+                    email: this.email,
+                    firstname: this.firstname,
+                    lastname: this.lastname,
+                    location: this.location,
+                    province: this.province,
+                    phone: this.phone
                 }
-                else 
-                    return response.json();
-            })
-            .then(response => {
-                console.log('Sukces. Odebrane dane ', response);
-                alert('Zmieniono dane użytkownika');
-                this.modalEditIsVisible = false;
-                this.reset();
-                this.getUsers();
-            })
-            .catch((error) => {
-                console.log('Błąd', error);
-                alert("Coś poszło nie tak!");
-            })
+
+                console.log('Przesłany obiekt', obj);
+
+                //request
+                fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(obj),
+                })
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    else 
+                        return response.json();
+                })
+                .then(response => {
+                    console.log('Sukces. Odebrane dane ', response);
+                    alert('Zmieniono dane użytkownika');
+                    this.modalEditIsVisible = false;
+                    this.reset();
+                    this.getUsers();
+                })
+                .catch((error) => {
+                    console.log('Błąd', error);
+                    alert("Coś poszło nie tak!");
+                })
+            }
+            else{
+                alert("Dane nie przeszły walidacji");
+            }
+            
         },
 
         
@@ -315,9 +327,9 @@ export default {
             return re.test(v);
         },
 
-        validatePhone: function(){
+        validatePhone: function(v){
             let re = /^[0-9]{9}$/;
-            this.isCorrectPhone = re.test(this.phone);
+            return re.test(v);
         },
     }
 }

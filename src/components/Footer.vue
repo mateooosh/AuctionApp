@@ -51,12 +51,12 @@
           </div>
           <div class="footer__about-us">
             <h3>O NAS</h3>
-            wdmj.pl - jest to serwis z darmowymi ogłoszeniami lokalnymi podzielonymi na kategorie: Nieruchomości, Motoryzacja, Rolnictwo, Elektronika, Sport, Zwierzęta, Praca, Dla dzieci, Moda, Pozostałe. Duży wybór przedmiotów używanych i nie tylko, sprzedawaj i kupuj w sposób, który nawet fizjologom się nie śnił. Zobacz jakie to proste!
+            wdmj.pl - jest to serwis z darmowymi ogłoszeniami lokalnymi podzielonymi na kategorie: Nieruchomości, Motoryzacja, Rolnictwo, Elektronika, Sport, Zwierzęta, Ogród, Dzieci, Moda, Pozostałe. Duży wybór przedmiotów używanych i nie tylko, sprzedawaj i kupuj w sposób, który nawet fizjologom się nie śnił. Zobacz jakie to proste!
           </div>
           
           <div class="footer__contact">
             <h3>KONTAKT</h3>
-            <div><i class="fas fa-home"></i> Cracow, PL</div>
+            <div><i class="fas fa-home"></i> Kraków, PL</div>
             <div><i class="fas fa-envelope"></i> email@example.com</div>
             <div><i class="fas fa-phone"></i> 123-456-789</div>
           </div>
