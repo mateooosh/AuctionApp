@@ -1,5 +1,5 @@
 # AuctionApp
-Application in progress
+An auction system that allows you to list items that other users can bid or buy. The main functions are registration, logging in, listing, searching, filtering, bidding and buying items. The administrator has the ability to manage auctions and users.
 
 ## Technologies
  Project is created with:
@@ -9,26 +9,7 @@ Application in progress
 * JavaScript, AJAX
 
 
-<br/>
 
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
 
