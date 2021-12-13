@@ -27,6 +27,7 @@
         </div>
 
         <h1 style="margin-top:100px">Twoje sprzedane aukcje</h1>
+        <p class="my__p" v-if="sold.length == 0 && gotData">Brak aukcji</p>
         <!-- loading animation -->
         <div v-if="!gotData" class="lds-dual-ring"></div>
         <div v-if="gotData" class="my__list" >
@@ -45,6 +46,7 @@
         </div>
 
         <h1 style="margin-top:100px">Twoje zakończone aukcje</h1>
+      <p class="my__p" v-if="old.length == 0 && gotData">Brak aukcji</p>
         <!-- loading animation -->
         <div v-if="!gotData" class="lds-dual-ring"></div>
         <div v-if="gotData" class="my__list" >
@@ -88,7 +90,11 @@ export default {
     mounted(){
         //request
         let url = `http://localhost:8080/api/auctions/${this.$store.state.userId}/own`;
-        fetch(url)
+        fetch(url, {
+          headers: {
+            'x-access-token': this.$store.state.token
+          }
+        })
         .then(response => {
             if(!response.ok) {
                 throw new Error(response.status);
@@ -149,7 +155,7 @@ export default {
     &__p{
         padding: 0;
         width: 500px;
-        margin: 230px auto 40px;
+        margin: 60px auto 40px;
         text-align: center;
         font-size: 17px;
         line-height: 1.5;

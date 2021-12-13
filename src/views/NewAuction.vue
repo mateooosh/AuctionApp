@@ -1,34 +1,33 @@
 <template>
   <div class="dodaj-ogloszenie">
     <Navbar/>
-    <FormularzDodawania/>
+    <NewAuctionForm/>
     <Footer/>
   </div>
 </template>
 
 <script>
-import { createStore } from 'vuex'
+import {createStore} from 'vuex'
 
 import Navbar from '@/components/Navbar.vue'
 import Footer from '@/components/Footer.vue'
-import FormularzDodawania from '@/components/FormularzDodawania.vue'
+import NewAuctionForm from '@/components/NewAuctionForm.vue'
 
 export default {
-  name: 'DodajOgloszenie',
+  name: 'NewAuction',
   store: createStore,
   components: {
     Navbar,
     Footer,
-    FormularzDodawania,
+    NewAuctionForm,
   },
-  mounted(){
-    if(!this.$store.state.logged){
+  mounted() {
+    if (!this.$store.state.logged) {
       alert("Aby dodać aukcję, najpierw musisz się zalogować");
       this.$router.push("/logowanie");
-    }
-    else{
+    } else {
       document.title = "Dodaj Ogłoszenie - wdmj.pl";
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 }

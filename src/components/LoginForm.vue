@@ -3,12 +3,12 @@
         <h1>Zaloguj się</h1>
         <form v-on:submit.prevent class="login__email">
             <label :class="{'wrong-email': !isCorrectEmail}" class="login__email__label" for="email">Adres e-mail<span style="color: red;">*</span></label>
-            <input @keyup.enter="logIn" @change="validateEmail"  v-model="email" class="login__email__input" name="email" type="text" placeholder="Adres e-mail">
+            <input @keyup.enter="logIn" @change="validateEmail"  v-model="email" class="login__email__input" name="email" id="email" type="text" placeholder="Adres e-mail">
         </form>
 
         <form v-on:submit.prevent class="login__password">
             <label :class="{'wrong-password': !isCorrectPassword}" class="login__password__label" for="password">Hasło<span style="color: red;">*</span></label>
-            <input @keyup.enter="logIn" @change="validatePassword" v-model="password" class="login__password__input" name="password" type="password" placeholder="Hasło" autocomplete="on">
+            <input @keyup.enter="logIn" @change="validatePassword" v-model="password" class="login__password__input" name="password" id="password" type="password" placeholder="Hasło" autocomplete="on">
         </form>
 
 
@@ -17,7 +17,7 @@
             <span v-if="!loading">Zaloguj się</span>
         </button>
 
-        <p class="login__register">Nie masz konta na wdmj.pl? 
+        <p class="login__register">Nie masz konta na wdmj.pl?
             <router-link to="/rejestracja">
                 <span style="font-weight:600">Zarejestruj się</span>
             </router-link>
@@ -29,7 +29,7 @@
 import { createStore } from 'vuex'
 
 export default {
-  name: 'Zaloguj',
+  name: 'Login',
   data(){
       return{
           email: '',
@@ -42,10 +42,6 @@ export default {
   },
   store: createStore,
   methods:{
-    //logowanie
-    onSubmit(){
-
-    },
     logIn(){
         if(this.isCorrectEmail && this.isCorrectPassword && this.didInputChanged){
             this.loading = true;
@@ -64,30 +60,37 @@ export default {
                 if(!response.ok) {
                     throw new Error(response.status);
                 }
-                else 
+                else
                     return response.json();
             })
             .then(response => {
                 this.loading = false;
                 //wyswietl zwrocone dane
                 console.log('Sukces. Odebrane dane ', response);
-                
+
                 this.$store.commit('logged', true);
                 this.$store.commit('userId', response.userId);
                 this.$store.commit('userEmail', response.email);
                 this.$store.commit('role', response.roles[0]);
+                this.$store.commit('token', response.accessToken);
+
+                localStorage.setItem('logged', true);
+                localStorage.setItem('userId', response.userId);
+                localStorage.setItem('userEmail', response.email);
+                localStorage.setItem('role', response.roles[0]);
+                localStorage.setItem('token', response.accessToken);
 
                 if(response.roles[0] === "ROLE_USER"){
                     alert("Udało się zalogować!");
-                    
+
                 }
                 else if(response.roles[0] === "ROLE_ADMIN"){
                     alert("Udało się zalogować jako admin!");
                     // this.$router.push("/admin");
                 }
                 this.$router.push("/");
-                
-                
+
+
             })
             .catch((error) => {
                 this.loading = false;
@@ -100,13 +103,13 @@ export default {
             alert("Dane nie przeszły walidacji!");
         }
 
-        
+
     },
 
     getLogged(){
       return this.$store.state.logged;
     },
-    
+
     //walidacja email
     validateEmail: function() {
         this.didInputChanged = true;
@@ -115,19 +118,13 @@ export default {
         this.isCorrectEmail = re.test(this.email);
     },
 
-    //walidacja username
-    // validateUsername: function () {
-    //     let re = /^.{6,}$/;
-    //     this.isCorrectUsername = re.test(this.username);
-    // },
-
     //walidacja password
     validatePassword: function () {
         this.didInputChanged = true;
         let re = /^.{6,}$/;
         this.isCorrectPassword = re.test(this.password);
     },
-    
+
   }
 }
 </script>
@@ -160,12 +157,11 @@ export default {
     width: 400px;
     // height: 500px;
     padding: 70px 40px 40px;
-    margin: 70px auto;
+    margin: 100px auto;
 
     h1{
         padding: 0;
-        margin: 0;
-        margin-bottom: 40px;
+        margin: 0 0 40px 0;
         text-align: left;
         font-weight: 400;
     }
@@ -188,7 +184,7 @@ export default {
             padding: 10px 10px;
             font-size: 16px;
             background-color: #F3F3F3;
-            
+
             &:focus{
                 outline: 1px solid #007E33;
             }
@@ -212,7 +208,7 @@ export default {
         transition: background-color .5s;
         }
     }
-    
+
     &__register{
         font-size: 12px;
         font-weight: 500;

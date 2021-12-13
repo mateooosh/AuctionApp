@@ -4,8 +4,8 @@
     <Search class="search"/>
     <!-- <h1>OFERTY</h1> -->
     <!-- {{kategoria}} -->
-    <Wyszukane :kategoria="kategoria" :key="$route.params.kategoria"/>
-    <!-- <Wyszukane v-if="query.length!=0" :query="query"/> -->
+    <SearchResults :kategoria="kategoria" :key="$route.params.kategoria"/>
+    <!-- <SearchResults v-if="query.length!=0" :query="query"/> -->
     <Footer/>
   </div>
 </template>
@@ -14,33 +14,33 @@
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue'
 import Search from '@/components/Search.vue'
-import Wyszukane from '@/components/Wyszukane.vue'
+import SearchResults from '@/components/SearchResults.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'OfertyKategoria',
-  data(){
-    return{
+  name: 'AuctionsByCategory',
+  data() {
+    return {
       // query: '',
     }
   },
   components: {
     Navbar,
     Search,
-    Wyszukane,
+    SearchResults,
     Footer
   },
-  computed:{
-    kategoria: function(){
+  computed: {
+    kategoria: function () {
       return this.$route.params.kategoria;
     }
   },
-  mounted(){
-    window.scrollTo(0,0);
+  mounted() {
+    window.scrollTo(0, 0);
   },
-  methods:{
-    getKategoria(v){
-      console.log("ta",v);
+  methods: {
+    getKategoria(v) {
+      console.log("ta", v);
     }
   }
 }
@@ -48,7 +48,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.search{
+.search {
   margin: 80px auto 30px;
 }
 </style>

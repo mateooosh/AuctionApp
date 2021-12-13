@@ -3,7 +3,7 @@
     <Navbar/>
     <Search class="search"/>
     <Categories/>
-    <Najnowsze/>
+    <LatestAuctions/>
     <Footer/>
   </div>
 </template>
@@ -13,7 +13,7 @@
 import Navbar from '@/components/Navbar.vue'
 import Search from '@/components/Search.vue'
 import Categories from '@/components/Categories.vue'
-import Najnowsze from '@/components/Najnowsze.vue'
+import LatestAuctions from '@/components/LatestAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
@@ -22,21 +22,19 @@ export default {
     Navbar,
     Search,
     Categories,
-    Najnowsze,
+    LatestAuctions,
     Footer
   },
-  mounted(){
+  mounted() {
     document.title = "wdmj.pl";
-    window.scrollTo(0,0);
-
-    
+    window.scrollTo(0, 0);
   }
 }
 </script>
 
 
 <style lang="scss" scoped>
-.search{
+.search {
   margin: 80px auto;
 }
 </style>

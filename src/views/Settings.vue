@@ -12,19 +12,18 @@ import Settings from '@/components/Settings.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
-  name: 'Ustawienia',
+  name: 'Settings',
   components: {
     Navbar,
     Settings,
     Footer
   },
-  mounted(){
-    if(!this.$store.state.logged){
+  mounted() {
+    if (!this.$store.state.logged) {
       this.$router.push("/logowanie");
-    }
-    else{
+    } else {
       document.title = "Ustawienia - wdmj.pl";
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 }

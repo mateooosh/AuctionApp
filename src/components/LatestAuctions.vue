@@ -1,13 +1,12 @@
 <template>
-  <div class="favorite">
-    <h1>Twoje obserwowane aukcje</h1>
+  <div class="newest">
+    <h1>Najnowsze ogłoszenia</h1>
 
-    <p class="favorite__p" v-if="auctions.length == 0 && gotData">Brak obserwowanych aukcji. <br/> Dzięki obserwowanym
-      wszystkie ważne ogłoszenia będziesz miał zawsze pod ręką.</p>
     <!-- loading animation -->
     <div v-if="!gotData" class="lds-dual-ring"></div>
 
-    <div v-if="gotData" class="favorite__list">
+
+    <div v-if="gotData" class="newest__list">
 
       <Card v-for="(auction, i) in auctions" :key="i"
             :auctionId="auction.auctionId"
@@ -18,11 +17,13 @@
             :actualPrice="auction.maxBidPrice"
             :instantPrice="auction.buyNowPrice"
             :url="auction.photo"
-            :favorite=true
+            :favorite=false
             :auctionState="auction.auctionState"
             own="false"
       />
     </div>
+
+    <button v-if="gotData && auctions.length%12==0" @click="getLatest()" class="newest__btn">Zobacz więcej</button>
   </div>
 </template>
 
@@ -31,54 +32,67 @@ import {createStore} from 'vuex';
 import Card from './Card.vue';
 
 export default {
-  name: 'Favorite',
+  name: 'LatestAuctions',
   store: createStore,
   components: {
-    Card
+    Card,
   },
   data() {
     return {
-      auctions: [],
       gotData: false,
+      page: 1,
+      auctions: [],
     }
   },
 
   mounted() {
-    //request
-    let url = `http://localhost:8080/api/auctions/${this.$store.state.userId}/favorit`;
-    fetch(url, {
-      headers: {
-        'x-access-token': this.$store.state.token
-      }
-    })
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.status);
-          } else
-            return response.json();
-        })
-        .then(response => {
-          // display response from server
-          console.log('Sukces. Odebrane dane ', response);
-          this.auctions = response;
-          this.gotData = true;
-        })
-        .catch(() => {
-          console.log('Coś poszło nie tak z requestem:', url);
-
-
-          alert("Nie udało się pobrać ulubionych aukcji!");
-        })
-
+    this.getLatest();
   },
 
+  methods: {
+    // get status of user
+    getLogged() {
+      return this.$store.state.logged;
+    },
+
+    getLatest() {
+      console.log('token', this.$store.state.token)
+      let url = `http://localhost:8080/api/auctions/latest?page=${this.page}`;
+      //request
+      fetch(url, {
+        headers: {
+          'x-access-token': this.$store.state.token
+        }
+      })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(response.status);
+            } else
+              return response.json();
+          })
+          .then(response => {
+            // display response from server
+            console.log('Sukces. Odebrane dane ', response);
+            this.auctions = this.auctions.concat(response);
+
+            this.gotData = true;
+            this.page++;
+          })
+          .catch(() => {
+            console.log('Coś poszło nie tak z requestem:', url);
+
+            alert("Nie udało się pobrać najnowszych aukcji!");
+          })
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
-.favorite {
+.newest {
   width: 1400px;
-  margin: 100px auto;
+  margin: auto;
+
 
   &__list {
     display: flex;
@@ -89,47 +103,50 @@ export default {
   h1 {
     padding: 0;
     margin: 0;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     text-align: center;
     font-weight: 400;
   }
 
-  &__p {
-    padding: 0;
-    width: 500px;
-    margin: 150px auto;
-    text-align: center;
-    font-size: 17px;
-    line-height: 1.5;
-    letter-spacing: 1px;
+  &__btn {
+    background-color: #007E33;
+    color: white;
+    margin: 10px auto 80px;
+    display: block;
+    font-size: 14px;
+    border-radius: 7px;
+    padding: 10px 30px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #006428;
+      transition: background-color .5s;
+    }
   }
 }
 
 @media(max-width: 1420px) {
-  .favorite {
+  .newest {
     width: 1050px;
   }
 }
 
 @media(max-width: 1080px) {
-  .favorite {
+  .newest {
     width: 700px;
   }
 }
 
 @media(max-width: 730px) {
-  .favorite {
+  .newest {
     width: 350px;
-
-    &__p {
-      width: 100%;
-      margin: 0;
-    }
   }
 }
 
 @media(max-width: 355px) {
-  .favorite {
+  .newest {
     width: 100%;
   }
 }
@@ -164,4 +181,6 @@ export default {
     transform: rotate(360deg);
   }
 }
+
+
 </style>

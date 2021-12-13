@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import {createRouter, createWebHashHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 
 const routes = [
@@ -9,53 +9,53 @@ const routes = [
   },
   {
     path: '/ulubione',
-    name: 'Ulubione',
-    component: () => import('../views/Ulubione.vue')
+    name: 'FavoritesAuctions',
+    component: () => import('../views/FavoritesAuctions.vue')
   },
   {
     path: '/moje-przedmioty',
-    name: 'MojePrzedmioty',
-    component: () => import('../views/MojePrzedmioty.vue')
+    name: 'MyAuctions',
+    component: () => import('../views/MyAuctions.vue')
   },
   {
     path: '/wygrane-licytacje',
-    name: 'WygraneLicytacje',
-    component: () => import('../views/WygraneLicytacje.vue')
+    name: 'WonAuctions',
+    component: () => import('../views/WonAuctions.vue')
   },
   {
     path: '/dodaj-ogloszenie',
-    name: 'DodajOgloszenie',
-    component: () => import('../views/DodajOgloszenie.vue')
+    name: 'NewAuction',
+    component: () => import('../views/NewAuction.vue')
   },
   {
     path: '/ustawienia',
-    name: 'Ustawienia',
-    component: () => import('../views/Ustawienia.vue')
+    name: 'Settings',
+    component: () => import('../views/Settings.vue')
   },
   {
     path: '/logowanie',
-    name: 'Logowanie',
-    component: () => import('../views/Logowanie.vue')
+    name: 'Login',
+    component: () => import('../views/Login.vue')
   },
   {
     path: '/rejestracja',
-    name: 'Rejestracja',
-    component: () => import('../views/Rejestracja.vue')
+    name: 'Register',
+    component: () => import('../views/Register.vue')
   },
   {
     path: '/oferty/:query',
-    name: 'Oferty',
-    component: () => import('../views/Oferty.vue')
+    name: 'Auctions',
+    component: () => import('../views/Auctions.vue')
   },
   {
     path: '/oferta/:auctionId',
-    name: 'Oferta',
-    component: () => import('../views/Oferta.vue')
+    name: 'Auction',
+    component: () => import('../views/Auction.vue')
   },
   {
     path: '/kategoria/:kategoria',
-    name: 'OfertyKategoria',
-    component: () => import('../views/OfertyKategoria.vue')
+    name: 'AuctionsByCategory',
+    component: () => import('../views/AuctionsByCategory.vue')
   },
   {
     path: '/admin',
@@ -64,8 +64,8 @@ const routes = [
   },
   {
     path: '/admin/aukcje',
-    name: 'Aukcje',
-    component: () => import('../views/AdminAukcje.vue')
+    name: 'AdminAuctions',
+    component: () => import('../views/AdminAuctions.vue')
   }
 ]
 

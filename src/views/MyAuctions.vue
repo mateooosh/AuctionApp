@@ -12,19 +12,18 @@ import MyAuctions from '@/components/MyAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'MojePrzedmioty',
+  name: 'MyAuctions',
   components: {
     Navbar,
     MyAuctions,
     Footer
   },
-  mounted(){
-    if(!this.$store.state.logged){
+  mounted() {
+    if (!this.$store.state.logged) {
       this.$router.push("/logowanie");
-    }
-    else{
+    } else {
       document.title = "Moje przedmioty - wdmj.pl";
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 }

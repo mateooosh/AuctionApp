@@ -12,19 +12,18 @@ import WonAuctions from '@/components/WonAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'WygraneLicytacje',
+  name: 'WonAuctions',
   components: {
     Navbar,
     WonAuctions,
     Footer
   },
-  mounted(){
-    if(!this.$store.state.logged){
+  mounted() {
+    if (!this.$store.state.logged) {
       this.$router.push("/");
-    }
-    else{
+    } else {
       document.title = "Wygrane Licytacje - wdmj.pl";
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 }

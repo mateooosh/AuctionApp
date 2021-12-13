@@ -127,6 +127,8 @@ export default {
       this.$store.commit('userId', '');
       this.$store.commit('userEmail', '');
       this.$store.commit('role', '');
+      this.$store.commit('token', null);
+      localStorage.clear();
       alert("Wylogowano!")
       this.$router.go();
     }

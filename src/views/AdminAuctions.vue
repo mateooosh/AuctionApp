@@ -1,8 +1,7 @@
 <template>
   <div class="dashboard">
-    <DashboardNav style="flex: 350px;" active="klienci"/>
-    <AdminUsers/>
-    <Footer/>
+    <DashboardNav style="flex: 350px;" active="aukcje"/>
+    <AuctionsAdmin/>
   </div>
 </template>
 
@@ -10,26 +9,24 @@
 import {createStore} from 'vuex'
 
 import DashboardNav from '@/components/DashboardNav.vue'
-import AdminUsers from '@/components/AdminUsers.vue'
+import AuctionsAdmin from '@/components/AuctionsAdmin.vue'
 
 export default {
-  name: 'Admin',
+  name: 'AdminAuctions',
   store: createStore,
   components: {
     DashboardNav,
-    AdminUsers
+    AuctionsAdmin
   },
   mounted() {
     if (this.$store.state.role !== "ROLE_ADMIN") {
       alert("Aby korzystać z panelu admina, najpierw musisz nim być");
-      this.$router.push("/");
-    } else {
-      document.title = "Panel Administratora - wdmj.pl";
-      window.scrollTo(0, 0);
+      this.$router.push('/');
     }
   }
 }
 </script>
+
 <style lang="scss" scoped>
 .dashboard {
   display: flex;

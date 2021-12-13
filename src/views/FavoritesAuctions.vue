@@ -12,19 +12,18 @@ import Favorite from '@/components/Favorite.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'Ulubione',
+  name: 'FavoritesAuctions',
   components: {
     Navbar,
     Favorite,
     Footer,
   },
-  mounted(){
-    if(!this.$store.state.logged){
+  mounted() {
+    if (!this.$store.state.logged) {
       this.$router.push("/");
-    }
-    else{
+    } else {
       document.title = "Ulubione - wdmj.pl";
-      window.scrollTo(0,0);
+      window.scrollTo(0, 0);
     }
   }
 }

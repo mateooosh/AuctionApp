@@ -3,8 +3,8 @@
     <Navbar/>
     <Search class="search"/>
     <!-- <h1>OFERTY</h1> -->
-    <Wyszukane :query="query" :key="query"/>
-    <!-- <Wyszukane v-if="query.length!=0" :query="query"/> -->
+    <SearchResults :query="query" :key="query"/>
+    <!-- <SearchResults v-if="query.length!=0" :query="query"/> -->
     <Footer/>
   </div>
 </template>
@@ -13,34 +13,34 @@
 // @ is an alias to /src
 import Navbar from '@/components/Navbar.vue'
 import Search from '@/components/Search.vue'
-import Wyszukane from '@/components/Wyszukane.vue'
+import SearchResults from '@/components/SearchResults.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'Oferty',
-  data(){
-    return{
+  name: 'Auctions',
+  data() {
+    return {
       // query: '',
     }
   },
   components: {
     Navbar,
     Search,
-    Wyszukane,
+    SearchResults,
     Footer
   },
-  computed:{
-    query: function(){
+  computed: {
+    query: function () {
       return this.$route.params.query;
     }
   },
-  mounted(){
-      window.scrollTo(0,0);
-      console.log(this.$route.params.query);
+  mounted() {
+    window.scrollTo(0, 0);
+    console.log(this.$route.params.query);
   },
-  methods:{
-    getQuery(v){
-      console.log("ta",v);
+  methods: {
+    getQuery(v) {
+      console.log("ta", v);
     }
   }
 }
@@ -48,7 +48,7 @@ export default {
 
 
 <style lang="scss" scoped>
-.search{
+.search {
   margin: 80px auto 30px;
 }
 </style>
