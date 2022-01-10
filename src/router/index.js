@@ -14,13 +14,13 @@ const routes = [
   },
   {
     path: '/moje-przedmioty',
-    name: 'MyAuctions',
-    component: () => import('../views/MyAuctions.vue')
+    name: 'MyAuctionsView',
+    component: () => import('../views/MyAuctionsView.vue')
   },
   {
     path: '/wygrane-licytacje',
-    name: 'WonAuctions',
-    component: () => import('../views/WonAuctions.vue')
+    name: 'WonAuctionsView',
+    component: () => import('../views/WonAuctionsView.vue')
   },
   {
     path: '/dodaj-ogloszenie',
@@ -29,8 +29,8 @@ const routes = [
   },
   {
     path: '/ustawienia',
-    name: 'Settings',
-    component: () => import('../views/Settings.vue')
+    name: 'SettingsView',
+    component: () => import('../views/SettingsView.vue')
   },
   {
     path: '/logowanie',

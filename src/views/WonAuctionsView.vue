@@ -12,7 +12,7 @@ import WonAuctions from '@/components/WonAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'WonAuctions',
+  name: 'WonAuctionsView',
   components: {
     Navbar,
     WonAuctions,

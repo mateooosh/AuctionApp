@@ -12,7 +12,7 @@ import MyAuctions from '@/components/MyAuctions.vue'
 import Footer from '@/components/Footer.vue'
 
 export default {
-  name: 'MyAuctions',
+  name: 'MyAuctionsView',
   components: {
     Navbar,
     MyAuctions,

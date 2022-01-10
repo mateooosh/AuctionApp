@@ -12,7 +12,7 @@ import Settings from '@/components/Settings.vue';
 import Footer from '@/components/Footer.vue';
 
 export default {
-  name: 'Settings',
+  name: 'SettingsView',
   components: {
     Navbar,
     Settings,
